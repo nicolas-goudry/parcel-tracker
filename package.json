@@ -1,0 +1,49 @@
+{
+  "name": "parcel-tracker",
+  "version": "0.0.0",
+  "description": "Parcel tracker can get parcel tracking data from multiple couriers",
+  "main": "build/index.js",
+  "scripts": {
+    "format": "prettier src/**/*.js --write",
+    "lint": "eslint src --fix",
+    "test": "mocha --require @babel/register",
+    "build": "babel src --out-dir build"
+  },
+  "pre-commit": [
+    "format",
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolas-goudry/parcel-tracker.git"
+  },
+  "author": "Nicolas Goudry <goudry.nicolas@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicolas-goudry/parcel-tracker/issues"
+  },
+  "homepage": "https://github.com/nicolas-goudry/parcel-tracker#readme",
+  "devDependencies": {
+    "@babel/cli": "7.7.7",
+    "@babel/core": "7.7.7",
+    "@babel/plugin-proposal-object-rest-spread": "7.7.7",
+    "@babel/preset-env": "7.7.7",
+    "@babel/register": "7.7.7",
+    "babel-eslint": "10.0.3",
+    "chai": "4.2.0",
+    "eslint": "6.8.0",
+    "eslint-config-standard": "14.1.0",
+    "eslint-plugin-import": "2.19.1",
+    "eslint-plugin-node": "11.0.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
+    "mocha": "6.2.2",
+    "pre-commit": "1.2.2",
+    "prettier": "1.19.1"
+  },
+  "dependencies": {
+    "axios": "0.19.0",
+    "moment": "2.24.0",
+    "xml2js": "0.4.23"
+  }
+}
