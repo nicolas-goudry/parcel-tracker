@@ -7,7 +7,7 @@ export const metadata = {
   id: 'COLIS_PRIVE',
   label: 'Colis Privé',
   matcher: [
-    /\b(\d{17})\b/i, // 00000000000000000
+    /\b(\d{17})\b/i // 00000000000000000
   ]
 }
 
