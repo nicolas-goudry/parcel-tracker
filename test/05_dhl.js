@@ -45,8 +45,21 @@ describe('DHL', function () {
         .to.have.property('steps')
         .instanceOf(Array).that.is.not.empty
     } catch (err) {
-      console.log(err)
       expect(err).to.not.be.an.instanceOf(Error)
+    }
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', async function() {
+    const number = '0000000000'
+
+    try {
+      const parcel = await track('DHL', number)
+
+      expect(parcel).to.be.undefined
+    } catch (err) {
+      expect(err)
+        .to.be.an.instanceOf(Error)
+        .and.have.property('message', 'Tracking data not found')
     }
   })
 
@@ -65,8 +78,6 @@ describe('DHL', function () {
   it('track - should fail tracking an invalid tracking number', async function () {
     try {
       const parcel = await track('DHL', '123')
-
-      console.log(parcel)
 
       expect(parcel).to.be.undefined
     } catch (err) {

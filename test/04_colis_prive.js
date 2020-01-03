@@ -49,6 +49,20 @@ describe('Colis Privé', function () {
     }
   })
 
+  it('track - should fail tracking unexisting (but valid) tracking number', async function() {
+    const number = '00000000000000000'
+
+    try {
+      const parcel = await track('COLIS_PRIVE', number)
+
+      expect(parcel).to.be.undefined
+    } catch (err) {
+      expect(err)
+        .to.be.an.instanceOf(Error)
+        .and.have.property('message', 'Tracking data not found')
+    }
+  })
+
   it('track - should fail tracking without tracking number', async function () {
     try {
       const parcel = await track('COLIS_PRIVE')
