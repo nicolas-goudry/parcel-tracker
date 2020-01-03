@@ -9,6 +9,9 @@
     "test": "mocha --require @babel/register",
     "build": "babel src --out-dir build"
   },
+  "mocha": {
+    "timeout": 5000
+  },
   "pre-commit": [
     "format",
     "lint"
