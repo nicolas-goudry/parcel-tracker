@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import format from './formatter'
 import scrape from './scraper'
+import errors from '../../utils/errors'
 
 export const metadata = {
   id: 'DHL',
@@ -38,27 +39,36 @@ const fetchParams = (number) => [
 ]
 
 const track = async (number) => {
-  let data
+  let steps
   let error
 
   for (const opts of fetchParams(number)) {
     try {
       const response = await axios(opts)
 
-      data = response.data
+      steps = format(scrape(response.data))
+
+      break
     } catch (err) {
       error = err
     }
   }
 
-  if (error && !data) {
+  if (error && !steps) {
+    if (
+      error.response &&
+      error.response.status === 400
+    ) {
+      throw errors.notFound
+    }
+
     throw error
   }
 
   return {
     ...metadata,
     number,
-    steps: format(scrape(data))
+    steps
   }
 }
 
