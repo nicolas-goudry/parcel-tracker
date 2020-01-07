@@ -7,7 +7,11 @@ describe('All couriers', function () {
     expect(couriers)
       .to.have.nested.property('CHRONOPOST.id')
       .equal('CHRONOPOST')
-    expect(Object.keys(couriers)).to.have.lengthOf(1)
+    expect(couriers)
+      .to.have.nested.property('COLIS_PRIVE.id')
+      .equal('COLIS_PRIVE')
+    expect(Object.keys(couriers)).to.have.lengthOf(3)
+    expect(Object.keys(couriers)).to.have.lengthOf(2)
   })
 
   it('track - should fail with no parameter', async function () {
