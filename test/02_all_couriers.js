@@ -13,7 +13,10 @@ describe('All couriers', function () {
     expect(couriers)
       .to.have.nested.property('DHL.id')
       .equal('DHL')
-    expect(Object.keys(couriers)).to.have.lengthOf(3)
+    expect(couriers)
+      .to.have.nested.property('DPD.id')
+      .equal('DPD')
+    expect(Object.keys(couriers)).to.have.lengthOf(4)
   })
 
   it('track - should fail with no parameter', async function () {
