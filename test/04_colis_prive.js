@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { identify, couriers, track } from '../src'
+import { identify, track } from '../src'
 
 describe('Colis Privé', function () {
   it('identify - should succeed with matching tracking number', function () {
