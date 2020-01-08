@@ -16,7 +16,7 @@ const format = (data) => {
 
     steps.push({
       location,
-      activity: step.evtDscr,
+      status: step.evtDscr,
       datetime: parseDatetime(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr')
     })
   }

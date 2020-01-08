@@ -11,7 +11,7 @@ const format = (data) => {
     data.scan.forEach((step) => {
       steps[j] = {
         location: step.scanData.location,
-        activity: step.scanDescription.content[0],
+        status: step.scanDescription.content[0],
         datetime: parseDatetime(step.date, 'YYYY-MM-DDTHH:mm:ssZ', 'fr')
       }
 
@@ -24,7 +24,7 @@ const format = (data) => {
       const time = $step.children('td[id^=heureTableTrace]').text()
       const locationText = $step.children('td[id^=lieuTableTrace]').text()
       const locationRegexp = locationText.match(/(Agence DPD de|Centre de tri DPD de) (.*) \(.*\)/i)
-      const activity = $step
+      const status = $step
         .children('td[id^=statutTableTrace]')
         .text()
         .replace(/\s+/g, ' ')
@@ -38,7 +38,7 @@ const format = (data) => {
       steps.push({
         datetime: parseDatetime(`${date} ${time}`, 'DD/MM/YYYY HH:mm', 'fr'),
         location,
-        activity
+        status
       })
     })
   }

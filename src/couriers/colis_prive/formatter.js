@@ -7,7 +7,7 @@ const format = (data) => {
     steps.push({
       datetime: parseDatetime(step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr'),
       location: '',
-      activity: step.children('td:last-child').text()
+      status: step.children('td:last-child').text()
     })
   }
 

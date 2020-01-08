@@ -5,7 +5,7 @@ const format = (data) => {
 
   for (const step of data.scanEventList) {
     steps.push({
-      activity: step.status,
+      status: step.status,
       location: step.scanLocation || '',
       datetime: parseDatetime(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr')
     })

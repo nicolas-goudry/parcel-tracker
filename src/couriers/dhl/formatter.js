@@ -42,7 +42,7 @@ const format = (data) => {
                 return _acc
               },
               {
-                activity: acc.activity,
+                status: acc.activity,
                 location: acc.location
               }
             )
@@ -52,7 +52,7 @@ const format = (data) => {
         return acc
       },
       {
-        activity: step.description.trim(),
+        status: step.description.trim(),
         location: (step.location && step.location.trim()) || null
       }
     )
