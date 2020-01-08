@@ -1,4 +1,5 @@
 import axios from 'axios'
+import omit from 'lodash.omit'
 
 import format from './formatter'
 import scrape from './scraper'
@@ -66,7 +67,7 @@ const track = async (number) => {
   }
 
   return {
-    ...metadata,
+    ...omit(metadata, 'matcher'),
     number,
     steps
   }
