@@ -1,15 +1,19 @@
+import cheerio from 'cheerio'
+
 import { parseDatetime } from '../../utils/datetime'
 
 const format = (data) => {
   const steps = []
 
-  for (const step of data) {
+  data.each((i, step) => {
+    const $step = cheerio(step)
+
     steps.push({
-      datetime: parseDatetime(step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr'),
+      datetime: parseDatetime($step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr'),
       location: '',
-      status: step.children('td:last-child').text()
+      status: $step.children('td:last-child').text()
     })
-  }
+  })
 
   return steps
 }
