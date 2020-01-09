@@ -1,5 +1,6 @@
 export default {
   input: Error('Input data missing'),
   notFound: Error('Tracking data not found'),
-  invalidCourier: Error('Invalid courier')
+  invalidCourier: Error('Invalid courier'),
+  zipCode: Error('Zip code missing')
 }

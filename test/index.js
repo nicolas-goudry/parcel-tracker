@@ -28,7 +28,10 @@ describe('All couriers', function () {
     expect(couriers)
       .to.have.nested.property('GLS.id')
       .equal('GLS')
-    expect(Object.keys(couriers)).to.have.lengthOf(6)
+    expect(couriers)
+      .to.have.nested.property('MONDIAL_RELAY.id')
+      .equal('MONDIAL_RELAY')
+    expect(Object.keys(couriers)).to.have.lengthOf(7)
   })
 
   it('track - should fail with no parameter', function () {
@@ -372,5 +375,67 @@ describe('GLS', function () {
 
   it('track - should fail tracking an invalid tracking number', function () {
     return expect(track('GLS', '4683271')).to.be.rejectedWith('Tracking data not found')
+  })
+})
+
+describe('MONDIAL_RELAY', function () {
+  it('identify - should succeed with matching tracking number', function () {
+    const ids = [
+      identify('01234567'),
+      identify('0123456789'),
+      identify('012345678901')
+    ]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('MONDIAL_RELAY')
+    }
+  })
+
+  it('identify - should fail with not matching tracking number', function () {
+    const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('rest')
+        .that.include('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('MONDIAL_RELAY')
+    }
+  })
+
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
+    const number = '1234567890' // EDIT TRACKING NUMBER HERE
+
+    return expect(track('MONDIAL_RELAY', number))
+      .to.eventually.nested.include({
+        id: 'MONDIAL_RELAY',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', function () {
+    const number = '2583420434:12345'
+
+    return expect(track('MONDIAL_RELAY', number)).to.be.rejectedWith('Tracking data not found')
+  })
+
+  it('track - should fail tracking without tracking number', function () {
+    return expect(track('MONDIAL_RELAY')).to.be.rejectedWith('Input data missing')
+  })
+
+  it('track - should fail tracking without zip code', function () {
+    return expect(track('MONDIAL_RELAY', '46832718')).to.be.rejectedWith('Zip code missing')
+  })
+
+  it('track - should fail tracking an invalid tracking number', function () {
+    return expect(track('MONDIAL_RELAY', '4683271:12345')).to.be.rejectedWith('Tracking data not found')
   })
 })
