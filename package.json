@@ -21,7 +21,6 @@
     "url": "git+https://github.com/nicolas-goudry/parcel-tracker.git"
   },
   "author": "Nicolas Goudry <goudry.nicolas@gmail.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nicolas-goudry/parcel-tracker/issues"
   },
