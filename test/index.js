@@ -32,9 +32,12 @@ describe('All couriers', function () {
       .to.have.nested.property('MONDIAL_RELAY.id')
       .equal('MONDIAL_RELAY')
     expect(couriers)
+      .to.have.nested.property('TNT.id')
+      .equal('TNT')
+    expect(couriers)
       .to.have.nested.property('UPS.id')
       .equal('UPS')
-    expect(Object.keys(couriers)).to.have.lengthOf(7)
+    expect(Object.keys(couriers)).to.have.lengthOf(9)
   })
 
   it('track - should fail with no parameter', function () {
@@ -440,6 +443,63 @@ describe('MONDIAL_RELAY', function () {
 
   it('track - should fail tracking an invalid tracking number', function () {
     return expect(track('MONDIAL_RELAY', '4683271:12345')).to.be.rejectedWith('Tracking data not found')
+  })
+})
+
+describe('TNT', function () {
+  it('identify - should succeed with matching tracking number', function () {
+    const ids = [
+      identify('012345678'),
+      identify('0123456789012345')
+    ]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('TNT')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('TNT')
+    }
+  })
+
+  it('identify - should fail with not matching tracking number', function () {
+    const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('rest')
+        .that.include('TNT')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('TNT')
+    }
+  })
+
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
+    const number = '012345678' // EDIT TRACKING NUMBER HERE
+
+    return expect(track('TNT', number))
+      .to.eventually.nested.include({
+        id: 'TNT',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', function () {
+    const number = '111222333'
+
+    return expect(track('TNT', number)).to.be.rejectedWith('Tracking data not found')
+  })
+
+  it('track - should fail tracking without tracking number', function () {
+    return expect(track('TNT')).to.be.rejectedWith('Input data missing')
+  })
+
+  it('track - should fail tracking an invalid tracking number', function () {
+    return expect(track('TNT', '4683271')).to.be.rejectedWith('Tracking data not found')
   })
 })
 
