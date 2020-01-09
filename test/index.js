@@ -17,6 +17,9 @@ describe('All couriers', function () {
       .to.have.nested.property('COLIS_PRIVE.id')
       .equal('COLIS_PRIVE')
     expect(couriers)
+      .to.have.nested.property('COLISSIMO.id')
+      .equal('COLISSIMO')
+    expect(couriers)
       .to.have.nested.property('DHL.id')
       .equal('DHL')
     expect(couriers)
@@ -37,7 +40,7 @@ describe('All couriers', function () {
     expect(couriers)
       .to.have.nested.property('UPS.id')
       .equal('UPS')
-    expect(Object.keys(couriers)).to.have.lengthOf(9)
+    expect(Object.keys(couriers)).to.have.lengthOf(10)
   })
 
   it('track - should fail with no parameter', function () {
@@ -154,6 +157,72 @@ describe('Colis Privé', function () {
 
   it('track - should fail tracking an invalid tracking number', function () {
     return expect(track('COLIS_PRIVE', '123')).to.be.rejectedWith('Tracking data not found')
+  })
+})
+
+describe('Colissimo', function () {
+  it('identify - should succeed with matching tracking number', function () {
+    const ids = [identify('0A012345678A9')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('COLISSIMO')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('COLISSIMO')
+    }
+  })
+
+  it('identify - should fail with not matching tracking number', function () {
+    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('rest')
+        .that.include('COLISSIMO')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('COLISSIMO')
+    }
+  })
+
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
+    const number = '6A16072081731' // EDIT TRACKING NUMBER HERE
+
+    return expect(track('COLISSIMO', number))
+      .to.eventually.nested.include({
+        id: 'COLISSIMO',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should succeed routing tracking to Chronopost tracker with a Chronopost tracking number', function () {
+    const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
+
+    return expect(track('COLISSIMO', number))
+      .to.eventually.nested.include({
+        id: 'CHRONOPOST',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', function () {
+    const number = '0A012345678A9'
+
+    return expect(track('COLISSIMO', number)).to.be.rejectedWith('Tracking data not found')
+  })
+
+  it('track - should fail tracking without tracking number', function () {
+    return expect(track('COLISSIMO')).to.be.rejectedWith('Input data missing')
+  })
+
+  it('track - should fail tracking an invalid tracking number', function () {
+    return expect(track('COLISSIMO', '123')).to.be.rejectedWith('Tracking data not found')
   })
 })
 
