@@ -27,14 +27,14 @@ const format = (data) => {
   for (const step of iterator) {
     const stepData = Object.keys(stepMatcher).reduce(
       (acc, stepMatch, i) => {
-        if (acc.activity.indexOf(stepMatch) !== -1) {
-          const activityMatch = acc.activity.match(new RegExp(`^${stepMatch}(.*)$`))
+        if (acc.status.indexOf(stepMatch) !== -1) {
+          const statusMatch = acc.status.match(new RegExp(`^${stepMatch}(.*)$`))
 
-          if (activityMatch) {
-            acc = activityMatch.reduce(
+          if (statusMatch) {
+            acc = statusMatch.reduce(
               (_acc, match, i) => {
                 if (i === 0) {
-                  _acc.activity = stepMatcher[stepMatch]
+                  _acc.status = stepMatcher[stepMatch]
                 } else if (!acc.location && i === 1 && typeof match === 'string') {
                   _acc.location = match.replace(/[.]/g, '').trim()
                 }
@@ -42,7 +42,7 @@ const format = (data) => {
                 return _acc
               },
               {
-                status: acc.activity,
+                status: acc.status,
                 location: acc.location
               }
             )
