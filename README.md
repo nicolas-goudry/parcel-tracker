@@ -6,7 +6,7 @@
 [babel]: https://babeljs.io
 [chaiAsPromised]: https://www.chaijs.com/plugins/chai-as-promised
 [semver]: http://semver.org
-[tags]: https://github.com/nicolas-goudry/parcel-tracker/tags
+[tags]: https://github.com/nicolas-goudry/parcel-tracker/releases
 
 # Parcel Tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url]
 
@@ -88,7 +88,7 @@ We use [standard code style][standard:url].
 
 ## Versioning
 
-We use [SemVer][semver] for versioning. For the versions available, see the [tags on this repository][tags]. 
+We use [SemVer][semver] for versioning. For the releases available, see the [releases on this repository][tags]. 
 
 ---
 Copyright © 2020 Nicolas Goudry – All rights reserved
