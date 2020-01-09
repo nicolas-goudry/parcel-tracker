@@ -1,6 +1,6 @@
 {
   "name": "parcel-tracker",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Parcel tracker can get parcel tracking data from multiple couriers",
   "main": "lib/parcel-tracker.js",
   "scripts": {
@@ -48,6 +48,7 @@
   "dependencies": {
     "axios": "0.19.1",
     "cheerio": "1.0.0-rc.3",
+    "he": "1.2.0",
     "lodash.omit": "4.5.0",
     "moment": "2.24.0",
     "xml2js": "0.4.23"

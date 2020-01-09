@@ -31,6 +31,9 @@ describe('All couriers', function () {
     expect(couriers)
       .to.have.nested.property('MONDIAL_RELAY.id')
       .equal('MONDIAL_RELAY')
+    expect(couriers)
+      .to.have.nested.property('UPS.id')
+      .equal('UPS')
     expect(Object.keys(couriers)).to.have.lengthOf(7)
   })
 
@@ -437,5 +440,65 @@ describe('MONDIAL_RELAY', function () {
 
   it('track - should fail tracking an invalid tracking number', function () {
     return expect(track('MONDIAL_RELAY', '4683271:12345')).to.be.rejectedWith('Tracking data not found')
+  })
+})
+
+describe('UPS', function () {
+  it('identify - should succeed with matching tracking number', function () {
+    const ids = [
+      identify('A0123456789'),
+      identify('01234567890123456789012345'),
+      identify('012345678901234567'),
+      identify('012345678'),
+      identify('1Z0123456789ABCDEF')
+    ]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('UPS')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('UPS')
+    }
+  })
+
+  it('identify - should fail with not matching tracking number', function () {
+    const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('rest')
+        .that.include('UPS')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('UPS')
+    }
+  })
+
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
+    const number = '1Z999AA10123456784' // EDIT TRACKING NUMBER HERE
+
+    return expect(track('UPS', number))
+      .to.eventually.nested.include({
+        id: 'UPS',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', function () {
+    const number = 'A0123456789'
+
+    return expect(track('UPS', number)).to.be.rejectedWith('Tracking data not found')
+  })
+
+  it('track - should fail tracking without tracking number', function () {
+    return expect(track('UPS')).to.be.rejectedWith('Input data missing')
+  })
+
+  it('track - should fail tracking an invalid tracking number', function () {
+    return expect(track('UPS', '4683271')).to.be.rejectedWith('Tracking data not found')
   })
 })
