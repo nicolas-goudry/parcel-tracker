@@ -384,7 +384,7 @@ describe('GLS', function () {
   })
 })
 
-describe('MONDIAL_RELAY', function () {
+describe('Mondial Relay', function () {
   it('identify - should succeed with matching tracking number', function () {
     const ids = [
       identify('01234567'),
