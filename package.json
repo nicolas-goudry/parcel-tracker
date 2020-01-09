@@ -1,8 +1,8 @@
 {
   "name": "parcel-tracker",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Parcel tracker can get parcel tracking data from multiple couriers",
-  "main": "build/index.js",
+  "main": "lib/parcel-tracker.js",
   "scripts": {
     "format": "prettier src/**/*.js --write",
     "lint": "eslint src --fix",
