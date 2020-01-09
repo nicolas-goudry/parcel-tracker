@@ -410,7 +410,7 @@ describe('MONDIAL_RELAY', function () {
   })
 
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '1234567890:12345' // EDIT TRACKING NUMBER HERE
+    const number = '1234567890' // EDIT TRACKING NUMBER HERE
 
     return expect(track('MONDIAL_RELAY', number))
       .to.eventually.nested.include({
@@ -432,7 +432,7 @@ describe('MONDIAL_RELAY', function () {
   })
 
   it('track - should fail tracking without zip code', function () {
-    return expect(track('MONDIAL_RELAY', '4683271')).to.be.rejectedWith('Zip code missing')
+    return expect(track('MONDIAL_RELAY', '46832718')).to.be.rejectedWith('Zip code missing')
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
