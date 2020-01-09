@@ -19,6 +19,7 @@ Supported couriers are :
 * DPD
 * Fedex
 * GLS
+* Mondial Relay
 
 ## Getting Started
 
