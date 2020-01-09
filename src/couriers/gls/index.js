@@ -32,6 +32,8 @@ const track = async (number) => {
     if (err.response && err.response.status === 404 && err.response.data) {
       throw errors.notFound
     }
+
+    throw err
   }
 
   return {
