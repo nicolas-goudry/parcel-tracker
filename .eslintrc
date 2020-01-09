@@ -2,10 +2,5 @@
   "extends": [
     "standard"
   ],
-  "parser": "babel-eslint",
-  "rules": {
-    "prefer-promise-reject-errors": "off",
-    "no-throw-literal": "off",
-    "no-async-promise-executor": "off"
-  }
+  "parser": "babel-eslint"
 }
