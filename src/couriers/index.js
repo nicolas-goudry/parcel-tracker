@@ -4,6 +4,7 @@ import DHL, { metadata as dhlMetadata } from './dhl'
 import DPD, { metadata as dpdMetadata } from './dpd'
 import FEDEX, { metadata as fedexMetadata } from './fedex'
 import GLS, { metadata as glsMetadata } from './gls'
+import MONDIAL_RELAY, { metadata as mondialRelayMetadata } from './mondial_relay'
 
 export const metadata = {
   [chronopostMetadata.id]: chronopostMetadata,
@@ -11,7 +12,8 @@ export const metadata = {
   [dhlMetadata.id]: dhlMetadata,
   [dpdMetadata.id]: dpdMetadata,
   [fedexMetadata.id]: fedexMetadata,
-  [glsMetadata.id]: glsMetadata
+  [glsMetadata.id]: glsMetadata,
+  [mondialRelayMetadata.id]: mondialRelayMetadata
 }
 
 export default {
@@ -20,5 +22,6 @@ export default {
   DHL,
   DPD,
   FEDEX,
-  GLS
+  GLS,
+  MONDIAL_RELAY
 }
