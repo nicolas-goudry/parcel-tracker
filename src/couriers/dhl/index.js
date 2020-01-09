@@ -14,30 +14,27 @@ export const metadata = {
   ]
 }
 
-const fetchParams = (number) => [
-  {
-    method: 'get',
-    url: `https://www.logistics.dhl/shipmentTracking?countryCode=FR&languageCode=fr&AWB=${number}`,
-    headers: {
-      Accept: 'application/json',
-      'User-Agent':
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-      'Accept-Language': 'fr-FR'
-    },
-    responseType: 'json'
+const fetchParams = (number) => [{
+  method: 'get',
+  url: `https://www.logistics.dhl/shipmentTracking?countryCode=FR&languageCode=fr&AWB=${number}`,
+  headers: {
+    Accept: 'application/json',
+    'User-Agent':
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+    'Accept-Language': 'fr-FR'
   },
-  {
-    method: 'get',
-    url: `https://www.logistics.dhl/v1/mailitems/track?number=${number}`,
-    headers: {
-      Accept: 'application/json',
-      'User-Agent':
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-      'Accept-Language': 'fr-FR'
-    },
-    responseType: 'json'
-  }
-]
+  responseType: 'json'
+}, {
+  method: 'get',
+  url: `https://www.logistics.dhl/v1/mailitems/track?number=${number}`,
+  headers: {
+    Accept: 'application/json',
+    'User-Agent':
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+    'Accept-Language': 'fr-FR'
+  },
+  responseType: 'json'
+}]
 
 const track = async (number) => {
   let steps

@@ -12,22 +12,19 @@ export const metadata = {
   ]
 }
 
-const fetchParams = (number) => [
-  {
-    method: 'get',
-    url: `https://tracking.dpd.de/rest/plc/fr_FR/${number}`,
-    responseType: 'json'
+const fetchParams = (number) => [{
+  method: 'get',
+  url: `https://tracking.dpd.de/rest/plc/fr_FR/${number}`,
+  responseType: 'json'
+}, {
+  method: 'get',
+  url: `http://www.dpd.fr/trace/${number}`,
+  headers: {
+    'User-Agent':
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
   },
-  {
-    method: 'get',
-    url: `http://www.dpd.fr/trace/${number}`,
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-    },
-    responseType: 'text'
-  }
-]
+  responseType: 'text'
+}]
 
 const track = async (number) => {
   let steps
