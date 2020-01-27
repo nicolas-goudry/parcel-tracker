@@ -1,9 +1,11 @@
-import couriers, { metadata } from './couriers'
+import * as couriers from './couriers'
 
 const couriersNumberMatchers = {}
 
-for (const courier of Object.keys(couriers)) {
-  couriersNumberMatchers[courier] = metadata[courier].matcher
+for (const courierKey of Object.keys(couriers)) {
+  const courier = couriers[courierKey]
+
+  couriersNumberMatchers[courier.id] = courier.matchers
 }
 
 const identify = (number) => {
