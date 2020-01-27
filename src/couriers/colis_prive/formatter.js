@@ -1,16 +1,15 @@
 import cheerio from 'cheerio'
+import moment from 'moment-timezone'
 
-import { parseDatetime } from '../../utils/datetime'
-
-const format = (data) => {
+const format = function colisPriveFormatter (data) {
   const steps = []
 
   data.each((i, step) => {
     const $step = cheerio(step)
 
     steps.push({
-      datetime: parseDatetime($step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr'),
-      location: '',
+      datetime: +moment.tz($step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr', 'Europe/Paris'),
+      location: null,
       status: $step.children('td:last-child').text()
     })
   })

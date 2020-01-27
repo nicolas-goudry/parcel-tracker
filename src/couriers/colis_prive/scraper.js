@@ -2,9 +2,9 @@ import cheerio from 'cheerio'
 
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function colisPriveScrapper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
   const parsedData = cheerio.load(data, { ignoreWhitespace: true })
