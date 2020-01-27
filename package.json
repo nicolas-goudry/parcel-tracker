@@ -52,7 +52,6 @@
     "cheerio": "1.0.0-rc.3",
     "he": "1.2.0",
     "lodash.get": "4.4.2",
-    "lodash.omit": "4.5.0",
     "moment": "2.24.0",
     "moment-timezone": "0.5.27",
     "tiny-invariant": "1.0.6",
