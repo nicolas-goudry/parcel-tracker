@@ -1,6 +1,12 @@
+import invariant from 'tiny-invariant'
+
 export default {
-  input: Error('Input data missing'),
-  notFound: Error('Tracking data not found'),
-  invalidCourier: Error('Invalid courier'),
-  zipCode: Error('Zip code missing')
+  notFound: Error('notFound'),
+  noData: Error('noData'),
+  zipCode: Error('zipCode'),
+  internalInvariant: function internalInvariantError (err) {
+    invariant(err, `${this.id} INTERNAL ERROR` + '\n' + err)
+
+    throw Error('internal')
+  }
 }
