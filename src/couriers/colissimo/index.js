@@ -1,20 +1,13 @@
 import axios from 'axios'
-import omit from 'lodash.omit'
 
+import Courier from '../../utils/Courier'
+import Parcel from '../../utils/Parcel'
+import errors from '../../utils/errors'
 import chronopost from '../chronopost'
 import format from './formatter'
 import scrape from './scraper'
-import errors from '../../utils/errors'
 
-export const metadata = {
-  id: 'COLISSIMO',
-  label: 'Colissimo',
-  matcher: [
-    /\b(\w{2}\d{9}\w{2})\b/i // 0A012345678A9
-  ]
-}
-
-const fetchParams = async (number) => {
+const makeOpts = async (number) => {
   // We make a useless request to get JWT token
   const butterRequest = await axios({
     method: 'get',
@@ -34,32 +27,26 @@ const fetchParams = async (number) => {
     }
   }
 
-  throw Error('Could not get access token')
+  throw Error('Missing JWT access token')
 }
 
-const track = async (number) => {
-  const params = await fetchParams(number)
-  let response
+class Colissimo extends Courier {
+  async track (number, opts) {
+    super.track(number)
 
-  try {
-    response = await axios(params)
-  } catch (err) {
-    if (err.response && (err.response.status === 404 || err.response.status === 400)) {
-      throw errors.notFound
+    const o = await makeOpts(number).catch(errors.internalInvariant)
+    const response = await axios(o).catch(errors.internalInvariant)
+
+    if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
+      return chronopost.track(number, opts)
     }
 
-    throw err
-  }
-
-  if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
-    return chronopost(number)
-  }
-
-  return {
-    ...omit(metadata, 'matcher'),
-    number,
-    steps: format(scrape(response.data))
+    return new Parcel(number, this.id, format(scrape(response.data)), opts)
   }
 }
 
-export default track
+const colissimo = new Colissimo('COLISSIMO', 'Colissimo', [
+  /\b(\w{2}\d{9}\w{2})\b/i // 0A012345678A9
+])
+
+export default colissimo

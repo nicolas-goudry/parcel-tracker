@@ -1,8 +1,8 @@
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function colissimoScrapper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
   if (data.returnCode !== 200) {

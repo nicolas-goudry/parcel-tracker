@@ -1,13 +1,13 @@
-import { parseDatetime } from '../../utils/datetime'
+import moment from 'moment-timezone'
 
-const format = (data) => {
+const format = function colissimoFormatter (data) {
   const steps = []
 
   for (const step of data) {
     steps.push({
       status: step.label,
       location: null,
-      datetime: parseDatetime(step.date, null, 'fr')
+      datetime: +moment.tz(step.date, null, 'fr', 'Europe/Paris')
     })
   }
 
