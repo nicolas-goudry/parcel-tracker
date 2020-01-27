@@ -7,7 +7,7 @@
     "format": "prettier src/**/*.js --write",
     "lint": "eslint src --fix",
     "test": "mocha test/index.js",
-    "build": "parcel build src/index.js --out-dir lib --out-file parcel-tracker.js --bundle-node-modules --no-source-maps --target node"
+    "build": "parcel build src/index.js --out-dir lib --out-file parcel-tracker.js --no-source-maps --target node"
   },
   "mocha": {
     "timeout": 5000
