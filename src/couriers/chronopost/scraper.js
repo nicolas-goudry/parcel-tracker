@@ -1,3 +1,4 @@
+import get from 'lodash.get'
 import { promisify } from 'util'
 import { parseString } from 'xml2js'
 
@@ -5,26 +6,22 @@ import errors from '../../utils/errors'
 
 const xml2js = promisify(parseString)
 
-const scrape = async (data) => {
+const scrape = async function chronopostScrapper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
   const parsedData = await xml2js(data)
-  const report = parsedData.Rapport
-  const response = parsedData.Reponse && parsedData.Reponse.Objet && parsedData.Reponse.Objet[0]
 
-  if (report && report.Code_Erreur && report.Code_Erreur[0]) {
-    throw Error(report.Code_Erreur[0])
-  } else if (response && response.Code_Erreur && response.Code_Erreur[0] === 'MSG_AUCUN_EVT') {
-    throw errors.notFound
-  } else if (response && response.Code_Erreur && response.Code_Erreur[0]) {
-    throw Error(response.Code_Erreur[0])
-  } else if (response && response.Evenement) {
-    return response.Evenement
+  if (get(parsedData, 'Rapport.Erreur[0].Code[0]') === 'MSG_AUCUN_NUMERO_LT') {
+    throw Error('invalidNumber')
   }
 
-  throw errors.notFound
+  if (get(parsedData, 'Reponse.Objet[0].Code_Erreur[0]') === 'MSG_AUCUN_EVT') {
+    throw errors.notFound
+  }
+
+  return get(parsedData, 'Reponse.Objet[0].Evenement')
 }
 
 export default scrape

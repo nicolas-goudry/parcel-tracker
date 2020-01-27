@@ -1,32 +1,32 @@
-import { parseDatetime } from '../../utils/datetime'
+import get from 'lodash.get'
+import moment from 'moment-timezone'
 
-const format = (data) => {
+const format = function chronopostFormatter (data) {
   const steps = []
 
   for (const step of data) {
-    if (
-      step.Libelle &&
-      step.Libelle[0] &&
-      step.Code_Etat &&
-      step.Code_Etat[0].trim() !== 'IM' &&
-      step.Code_Etat[0].trim() !== 'SM'
-    ) {
+    const status = get(step, 'Libelle[0]')
+    const statusCode = get(step, 'Code_Etat[0]').trim()
+
+    if (status && statusCode !== 'IM' && statusCode !== 'SM') {
       let location = null
 
-      if (step.Numero_Poste_Comptable && step.Numero_Poste_Comptable[0] !== 'CFR') {
-        if (step.CP && step.CP[0] && step.CP[0].trim()) {
-          location = step.Bureau[0]
-        } else if (step.Information_Complementaire) {
-          const locInfComp = step.Information_Complementaire.filter((inf) => inf.$.nom === 'Lieu')
+      if (get(step, 'Numero_Poste_Comptable[0]') !== 'CFR') {
+        const zipCode = get(step, 'CP[0]')
 
-          if (locInfComp[0] && locInfComp[0]._) {
-            location = locInfComp[0]._
-          }
+        if (zipCode && zipCode.trim()) {
+          location = get(step, 'Bureau[0]', null)
+        } else if (step.Information_Complementaire) {
+          const locInfComp = step.Information_Complementaire.filter((inf) => {
+            return inf.$.nom === 'Lieu'
+          })
+
+          location = get(locInfComp, '[0]._', null)
         }
       }
 
       steps.push({
-        datetime: parseDatetime(`${step.Date[0]} ${step.Heure[0]}`, 'dddd DD/MM/YYYY HH:mm', 'fr'),
+        datetime: +moment.tz(`${step.Date[0]} ${step.Heure[0]}`, 'dddd DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
         status: step.Libelle[0],
         location
       })
