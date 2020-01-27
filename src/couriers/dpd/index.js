@@ -26,7 +26,7 @@ const makeOpts = (number) => {
 }
 
 class DPD extends Courier {
-  async track(number, opts) {
+  async track (number, opts) {
     super.track(number)
 
     let steps
