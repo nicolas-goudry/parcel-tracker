@@ -2,9 +2,9 @@ import cheerio from 'cheerio'
 
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function dpdScrapper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
   if (typeof data === 'string') {

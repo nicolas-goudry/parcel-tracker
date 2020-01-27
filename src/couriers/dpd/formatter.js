@@ -1,8 +1,7 @@
 import cheerio from 'cheerio'
+import moment from 'moment-timezone'
 
-import { parseDatetime } from '../../utils/datetime'
-
-const format = (data) => {
+const format = function dpdFormatter (data) {
   const steps = []
 
   if (data.scan) {
@@ -12,7 +11,8 @@ const format = (data) => {
       steps[j] = {
         location: step.scanData.location,
         status: step.scanDescription.content[0],
-        datetime: parseDatetime(step.date, 'YYYY-MM-DDTHH:mm:ssZ', 'fr')
+        // @TODO: Make sure timezone is Paris
+        datetime: +moment.tz(step.date, 'YYYY-MM-DDTHH:mm:ssZ', 'fr', 'Europe/Paris')
       }
 
       j--
@@ -36,7 +36,8 @@ const format = (data) => {
       }
 
       steps.push({
-        datetime: parseDatetime(`${date} ${time}`, 'DD/MM/YYYY HH:mm', 'fr'),
+        // @TODO: Make sure timezone is Paris
+        datetime: +moment.tz(`${date} ${time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
         location,
         status
       })
