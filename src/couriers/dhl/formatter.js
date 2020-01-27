@@ -1,4 +1,4 @@
-import { parseDatetime } from '../../utils/datetime'
+import moment from 'moment-timezone'
 
 const stepMatcher = {
   "Arrivée à l'agence DHL de ": "Arrivée à l'agence DHL",
@@ -10,7 +10,7 @@ const stepMatcher = {
   "Traitée à l'agence DHL de ": "Traitée à l'agence DHL"
 }
 
-const format = (data) => {
+const format = function dhlFormatter (data) {
   let iterator = []
   let dateParse
 
@@ -58,7 +58,8 @@ const format = (data) => {
     )
 
     steps.push({
-      datetime: parseDatetime(`${step.date.trim()} ${step.time.trim()}`, dateParse, 'fr'),
+      // @TODO: Make sure timezone is Paris
+      datetime: +moment.tz(`${step.date.trim()} ${step.time.trim()}`, dateParse, 'fr', 'Europe/Paris'),
       ...stepData
     })
   }

@@ -1,13 +1,11 @@
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function dhlScrapper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
-  if (data.meta && data.meta.error) {
-    throw errors.notFound
-  } else if (data.errors) {
+  if ((data.meta && data.meta.error) || data.errors) {
     throw errors.notFound
   }
 
