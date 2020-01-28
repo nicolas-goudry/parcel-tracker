@@ -34,27 +34,31 @@ We use [`parcel`][parcel] in order to build project. It uses [`babel`][babel] un
 
 ### Installing
 
-Build, then grab `lib/parcel-tracker.js` and add it to your project directory.
+Install Parcel Tracker as a dependency to your project :
+
+```shell
+$ npm i -S git@github.com:nicolas-goudry/parcel-tracker.git
+```
 
 Then, here’s how you can use Parcel Tracker :
 
 ```js
-import { identify, track } from './parcel-tracker.js'
+const { identify, couriers } = require('parcel-tracker')
 
 const number = 'XJ006848316JF'
-const couriers = identify(number)
+const candidates = identify(number)
 // Object with 2 keys :
 // - candidates: contains most probable couriers matching number
 // - rest: contains other supported couriers
 // { candidates: [], rest: [] }
 
-(async () => {
+;(async () => {
   // We process couriers keys (first 'candidates', then 'rest')
-  for (const key in couriers) {
+  for (const key in candidates) {
     // For each key, we try to track number with listed couriers
-    for (const courier of couriers[key]) {
+    for (const courier of candidates[key]) {
       try {
-        const parcel = await track(courier, number)
+        const parcel = await couriers[courier].track(number, { chrono: false })
 
         return parcel
         // Object with 4 keys :
@@ -83,8 +87,6 @@ npm test
 ### Coding style
 
 We use [standard code style][standard:url].
-
-### 
 
 ## Versioning
 
