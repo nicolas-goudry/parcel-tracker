@@ -6,7 +6,7 @@ import errors from '../../utils/errors'
 
 const xml2js = promisify(parseString)
 
-const scrape = async function chronopostScrapper (data) {
+const scrape = async function chronopostScraper (data) {
   if (!data) {
     throw errors.noData
   }

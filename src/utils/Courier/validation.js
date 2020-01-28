@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi'
 
-const joi = Joi.extend(function extendJoi (joi) {
+const joi = Joi.extend((joi) => {
   return {
     type: 'regex',
     base: joi.any(),

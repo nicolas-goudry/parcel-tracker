@@ -1,6 +1,6 @@
 import errors from '../../utils/errors'
 
-const scrape = function dhlScrapper (data) {
+const scrape = function dhlScraper (data) {
   if (!data) {
     throw errors.noData
   }

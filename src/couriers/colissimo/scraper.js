@@ -1,6 +1,6 @@
 import errors from '../../utils/errors'
 
-const scrape = function colissimoScrapper (data) {
+const scrape = function colissimoScraper (data) {
   if (!data) {
     throw errors.noData
   }
