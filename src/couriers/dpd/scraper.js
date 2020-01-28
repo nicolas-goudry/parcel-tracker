@@ -1,5 +1,7 @@
 import cheerio from 'cheerio'
 
+import get from 'lodash.get'
+
 import errors from '../../utils/errors'
 
 const scrape = function dpdScraper (data) {
@@ -16,10 +18,10 @@ const scrape = function dpdScraper (data) {
 
     return parsedData('table#tableTrace tr[id^=ligneTableTrace]')
   } else {
-    const pkg = data && data.parcellifecycleResponse && data.parcellifecycleResponse.parcelLifeCycleData
+    const pkg = get(data, 'parcellifecycleResponse.parcelLifeCycleData.scanInfo')
 
-    if (pkg && pkg.scanInfo) {
-      return pkg.scanInfo
+    if (pkg) {
+      return pkg
     }
   }
 

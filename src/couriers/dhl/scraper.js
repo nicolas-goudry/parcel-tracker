@@ -1,3 +1,5 @@
+import get from 'lodash.get'
+
 import errors from '../../utils/errors'
 
 const scrape = function dhlScraper (data) {
@@ -5,18 +7,16 @@ const scrape = function dhlScraper (data) {
     throw errors.noData
   }
 
-  if ((data.meta && data.meta.error) || data.errors) {
+  if (get(data, 'meta.error') || data.errors) {
     throw errors.notFound
   }
 
-  if (data.results && data.results[0]) {
-    const pkg = data.results[0]
+  let pkg = get(data, 'results[0]')
 
-    if (pkg && pkg.checkpoints) {
-      return pkg
-    }
-  } else if (data.data.mailItems && data.data.mailItems[0]) {
-    const pkg = data.data.mailItems[0]
+  if (pkg && pkg.checkpoints) {
+    return pkg
+  } else {
+    pkg = get(data, 'data.mailItems[0]')
 
     if (pkg && pkg.events) {
       return pkg

@@ -1,3 +1,5 @@
+import get from 'lodash.get'
+
 import errors from '../../utils/errors'
 
 const scrape = function colissimoScraper (data) {
@@ -9,7 +11,7 @@ const scrape = function colissimoScraper (data) {
     throw errors.notFound
   }
 
-  if (data.shipment && data.shipment.event && data.shipment.event.length) {
+  if (get(data, 'shipment.event.length')) {
     return data.shipment.event
   }
 
