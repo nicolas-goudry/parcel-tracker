@@ -30,7 +30,7 @@ const makeOpts = async (number) => {
   throw Error('Missing JWT access token')
 }
 
-class Colissimo extends Courier {
+class LaPoste extends Courier {
   async track (number, opts) {
     super.track(number)
 
@@ -49,8 +49,8 @@ class Colissimo extends Courier {
   }
 }
 
-const colissimo = new Colissimo('COLISSIMO', 'Colissimo', [
+const laPoste = new LaPoste('LA_POSTE', 'La Poste', [
   /\b(\w{2}\d{9}\w{2})\b/i // 0A012345678A9
 ])
 
-export default colissimo
+export default laPoste

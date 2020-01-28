@@ -2,7 +2,7 @@ import get from 'lodash.get'
 
 import errors from '../../utils/errors'
 
-const scrape = function colissimoScraper (data) {
+const scrape = function laPosteScraper (data) {
   if (!data) {
     throw errors.noData
   }

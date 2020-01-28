@@ -1,6 +1,6 @@
 import moment from 'moment-timezone'
 
-const format = function colissimoFormatter (data) {
+const format = function laPosteFormatter (data) {
   const steps = []
 
   for (const step of data) {
