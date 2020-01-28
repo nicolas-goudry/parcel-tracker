@@ -1,13 +1,13 @@
-import { parseDatetime } from '../../utils/datetime'
+import moment from 'moment-timezone'
 
-const format = (data) => {
+const format = function fedexFormatter (data) {
   const steps = []
 
-  for (const step of data.scanEventList) {
+  for (const step of data) {
     steps.push({
       status: step.status,
-      location: step.scanLocation || '',
-      datetime: parseDatetime(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr')
+      location: step.scanLocation || null,
+      datetime: +moment.tz(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr', 'Europe/Paris')
     })
   }
 

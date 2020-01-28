@@ -1,26 +1,26 @@
+import get from 'lodash.get'
+
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function fedexScraper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
-  const pkg = data.TrackPackagesResponse &&
-    data.TrackPackagesResponse.packageList &&
-    data.TrackPackagesResponse.packageList[0]
+  const pkg = get(data, 'TrackPackagesResponse.packageList[0]')
 
-  if (pkg.isInvalid) {
+  if (pkg && pkg.isInvalid) {
     throw errors.notFound
   }
 
-  const err = pkg && pkg.errorList && pkg.errorList[0] && pkg.errorList[0].code !== ''
+  const err = get(pkg, 'errorList[0].message')
 
   if (err) {
-    throw Error(pkg.errorList[0].message)
+    throw errors.unknown(err)
   }
 
   if (pkg && pkg.scanEventList) {
-    return pkg
+    return pkg.scanEventList
   }
 
   throw errors.notFound
