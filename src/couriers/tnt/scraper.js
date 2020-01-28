@@ -2,7 +2,7 @@ import cheerio from 'cheerio'
 
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function tntScraper (data) {
   if (!data) {
     throw errors.input
   }

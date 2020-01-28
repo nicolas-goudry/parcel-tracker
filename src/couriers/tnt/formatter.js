@@ -1,15 +1,14 @@
 import cheerio from 'cheerio'
+import moment from 'moment-timezone'
 
-import { parseDatetime } from '../../utils/datetime'
-
-const format = (data) => {
+const format = function tntFormatter (data) {
   const steps = []
 
   if (data.events) {
     for (const step of data.events) {
       steps.push({
         location: step.location.city || null,
-        datetime: parseDatetime(step.date, null, 'fr'),
+        datetime: +moment.tz(step.date, null, 'fr', 'Europe/Paris'),
         activity: step.statusDescription
       })
     }
@@ -33,7 +32,7 @@ const format = (data) => {
         .trim()
 
       steps.push({
-        datetime: parseDatetime(dateTime, 'DD/MM/YYYY HH:mm', 'fr'),
+        datetime: +moment.tz(dateTime, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
         location: location || null,
         activity
       })
