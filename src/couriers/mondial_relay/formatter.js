@@ -1,12 +1,11 @@
 import cheerio from 'cheerio'
-
-import { parseDatetime } from '../../utils/datetime'
+import moment from 'moment-timezone'
 
 const stepMatcher = {
   'Prise en charge en agence ': 'Prise en charge en agence'
 }
 
-const format = (data) => {
+const format = function mondialRelayFormatter (data) {
   const steps = []
 
   data.each((i, step) => {
@@ -58,7 +57,7 @@ const format = (data) => {
 
       steps.push({
         ...stepData,
-        datetime: parseDatetime(`${day} ${time}`, 'DD/MM/YYYY HH:mm', 'fr')
+        datetime: +moment.tz(`${day} ${time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris')
       })
     }
   })
