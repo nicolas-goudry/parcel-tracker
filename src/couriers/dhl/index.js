@@ -57,7 +57,7 @@ class DHL extends Courier {
         throw errors.notFound
       }
 
-      errors.internalInvariant(error)
+      errors.internalInvariant.call(this, error)
     }
 
     return new Parcel(number, this.id, steps, opts)

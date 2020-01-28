@@ -34,8 +34,8 @@ class Colissimo extends Courier {
   async track (number, opts) {
     super.track(number)
 
-    const o = await makeOpts(number).catch(errors.internalInvariant)
-    const response = await axios(o).catch(errors.internalInvariant)
+    const o = await makeOpts(number).catch(errors.internalInvariant.bind(this))
+    const response = await axios(o).catch(errors.internalInvariant.bind(this))
 
     if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
       return chronopost.track(number, opts)

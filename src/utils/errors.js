@@ -5,7 +5,7 @@ export default {
   noData: Error('noData'),
   zipCode: Error('zipCode'),
   internalInvariant: function internalInvariantError (err) {
-    invariant(err, `${this.id} INTERNAL ERROR` + '\n' + err)
+    invariant(!err, `${this.id}: INTERNAL ERROR\n\n${err}`)
 
     throw Error('internal')
   }

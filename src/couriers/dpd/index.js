@@ -45,7 +45,7 @@ class DPD extends Courier {
     }
 
     if (error && !steps) {
-      errors.internalInvariant(error)
+      errors.internalInvariant.call(this, error)
     }
 
     return new Parcel(number, this.id, steps, opts)

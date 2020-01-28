@@ -27,7 +27,7 @@ class ColisPrive extends Courier {
   async track (number, opts) {
     super.track(number)
 
-    const response = await axios(makeOpts(number)).catch(errors.internalInvariant)
+    const response = await axios(makeOpts(number)).catch(errors.internalInvariant.bind(this))
 
     return new Parcel(number, this.id, format(scrape(response.data, this.errors)), opts)
   }
