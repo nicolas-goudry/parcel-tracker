@@ -15,11 +15,11 @@ Parcel Tracker is a Javascript library which can track parcels from numerous cou
 Supported couriers are :
 * Chronopost
 * Colis Privé
-* Colissimo
 * DHL
 * DPD
 * Fedex
 * GLS
+* La Poste (Colissimo + Courier Suivi)
 * Mondial Relay
 * TNT
 * UPS
