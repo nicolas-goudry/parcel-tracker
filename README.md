@@ -37,7 +37,7 @@ We use [`parcel`][parcel] in order to build project. It uses [`babel`][babel] un
 Install Parcel Tracker as a dependency to your project :
 
 ```shell
-$ npm i -S git@github.com:nicolas-goudry/parcel-tracker.git
+$ npm i -S git@github.com:nicolas-goudry/parcel-tracker.git#latest
 ```
 
 Then, here’s how you can use Parcel Tracker :
