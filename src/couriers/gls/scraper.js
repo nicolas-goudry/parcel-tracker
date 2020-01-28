@@ -1,14 +1,16 @@
+import get from 'lodash.get'
+
 import errors from '../../utils/errors'
 
-const scrape = (data) => {
+const scrape = function glsScraper (data) {
   if (!data) {
-    throw errors.input
+    throw errors.noData
   }
 
-  const pkg = data.tuStatus && data.tuStatus[0]
+  const pkg = get(data, 'tuStatus[0].history')
 
-  if (pkg && pkg.history && pkg.history.length) {
-    return pkg.history
+  if (pkg && pkg.length) {
+    return pkg
   }
 
   throw errors.notFound

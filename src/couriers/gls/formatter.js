@@ -1,10 +1,10 @@
-import { parseDatetime } from '../../utils/datetime'
+import moment from 'moment-timezone'
 
-const format = (data) => {
+const format = function glsFormatter (data) {
   const steps = []
 
   for (const step of data) {
-    let location = ''
+    let location = null
 
     if (step.address && step.address.countryName) {
       if (step.address.city) {
@@ -17,7 +17,7 @@ const format = (data) => {
     steps.push({
       location,
       status: step.evtDscr,
-      datetime: parseDatetime(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr')
+      datetime: +moment.tz(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr', 'Europe/Paris')
     })
   }
 
