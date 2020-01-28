@@ -18,7 +18,7 @@ class Chronopost extends Courier {
     super.track(number)
 
     const response = await axios(makeOpts(number)).catch((err) => {
-      errors.internalInvariant.call(this, err)
+      throw errors.internal.call(this, err)
     })
     const rawSteps = await scrape(response.data)
 
