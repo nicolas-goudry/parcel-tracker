@@ -9,7 +9,7 @@ const format = function tntFormatter (data) {
       steps.push({
         location: step.location.city || null,
         datetime: +moment.tz(step.date, null, 'fr', 'Europe/Paris'),
-        activity: step.statusDescription
+        status: step.statusDescription
       })
     }
   } else {
@@ -25,7 +25,7 @@ const format = function tntFormatter (data) {
         .text()
         .replace(/\s+/g, ' ')
         .trim()
-      const activity = $step
+      const status = $step
         .children('.roster__item:first-child')
         .text()
         .replace(/\s+/g, ' ')
@@ -34,7 +34,7 @@ const format = function tntFormatter (data) {
       steps.push({
         datetime: +moment.tz(dateTime, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
         location: location || null,
-        activity
+        status
       })
     })
   }

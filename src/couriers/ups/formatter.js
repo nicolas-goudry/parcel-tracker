@@ -9,7 +9,7 @@ const format = function upsFormatter (data) {
       steps.push({
         datetime: +moment.tz(`${step.date} ${step.time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
         location: step.location,
-        activity: he.decode(step.activityScan)
+        status: he.decode(step.activityScan)
       })
     }
   }
