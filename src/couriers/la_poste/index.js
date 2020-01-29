@@ -6,6 +6,7 @@ import errors from '../../utils/errors'
 import chronopost from '../chronopost'
 import format from './formatter'
 import scrape from './scraper'
+import get from 'lodash.get'
 
 const makeOpts = async (number) => {
   // We make a useless request to get JWT token
@@ -34,10 +35,16 @@ class LaPoste extends Courier {
   async track (number, opts) {
     super.track(number)
 
-    const o = await makeOpts(number).catch((err) => {
+    const axiosOptions = await makeOpts(number).catch((err) => {
       throw errors.internal.call(this, err)
     })
-    const response = await axios(o).catch((err) => {
+    const response = await axios(axiosOptions).catch((err) => {
+      const status = get(err, 'response.status')
+
+      if ((status === 404 || status === 400) && err.response.data) {
+        throw errors.notFound
+      }
+
       throw errors.internal.call(this, err)
     })
 
