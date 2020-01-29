@@ -38,7 +38,7 @@ class Fedex extends Courier {
   }
 }
 
-const fedex = new Fedex('FEDEX', 'Fedex', [
+const fedex = new Fedex('FEDEX', 'FedEx', [
   /\b(\d{10})\b/i, // 0000000000
   /\b(\d{12})\b/i, // 000000000000
   /\b(\d{15})\b/i, // 000000000000000
