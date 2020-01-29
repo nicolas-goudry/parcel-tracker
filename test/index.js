@@ -2,53 +2,30 @@
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 
-const { couriers, identify, track } = require('../lib/parcel-tracker')
+const { couriers, identify } = require('../lib/parcel-tracker')
 
 chai.use(chaiAsPromised)
 
 const expect = chai.expect
 
 describe('All couriers', function () {
-  it('metadata - should list all couriers', function () {
-    expect(couriers)
-      .to.have.nested.property('CHRONOPOST.id')
-      .equal('CHRONOPOST')
-    expect(couriers)
-      .to.have.nested.property('COLIS_PRIVE.id')
-      .equal('COLIS_PRIVE')
-    expect(couriers)
-      .to.have.nested.property('COLISSIMO.id')
-      .equal('COLISSIMO')
-    expect(couriers)
-      .to.have.nested.property('DHL.id')
-      .equal('DHL')
-    expect(couriers)
-      .to.have.nested.property('DPD.id')
-      .equal('DPD')
-    expect(couriers)
-      .to.have.nested.property('FEDEX.id')
-      .equal('FEDEX')
-    expect(couriers)
-      .to.have.nested.property('GLS.id')
-      .equal('GLS')
-    expect(couriers)
-      .to.have.nested.property('MONDIAL_RELAY.id')
-      .equal('MONDIAL_RELAY')
-    expect(couriers)
-      .to.have.nested.property('TNT.id')
-      .equal('TNT')
-    expect(couriers)
-      .to.have.nested.property('UPS.id')
-      .equal('UPS')
+  it('should export all couriers', function () {
+    expect(couriers).to.have.any.keys(
+      'CHRONOPOST',
+      'COLIS_PRIVE',
+      'DHL',
+      'DPD',
+      'FEDEX',
+      'GLS',
+      'LA_POSTE',
+      'MONDIAL_RELAY',
+      'TNT',
+      'UPS'
+    )
+  })
+
+  it('should count 10 couriers', function () {
     expect(Object.keys(couriers)).to.have.lengthOf(10)
-  })
-
-  it('track - should fail with no parameter', function () {
-    return expect(track()).to.be.rejectedWith('Invalid courier')
-  })
-
-  it('track - should fail with unknown courier', function () {
-    return expect(track('XXX', '123')).to.be.rejectedWith('Invalid courier')
   })
 })
 
@@ -82,9 +59,9 @@ describe('Chronopost', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('CHRONOPOST', number))
+    return expect(couriers.CHRONOPOST.track(number))
       .to.eventually.nested.include({
-        id: 'CHRONOPOST',
+        courier: 'CHRONOPOST',
         number
       })
       .and.to.have.property('steps')
@@ -94,19 +71,19 @@ describe('Chronopost', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = 'XX0000000000000'
 
-    return expect(track('CHRONOPOST', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.CHRONOPOST.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('CHRONOPOST')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.CHRONOPOST.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('CHRONOPOST', '123')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.CHRONOPOST.track('123')).to.be.rejectedWith('notFound')
   })
 })
 
-describe('Colis Privé', function () {
+describe('Colis Prive', function () {
   it('identify - should succeed with matching tracking number', function () {
     const ids = [identify('00000000000000000')]
 
@@ -134,9 +111,9 @@ describe('Colis Privé', function () {
   })
 
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = 'PS0000124616' // EDIT TRACKING NUMBER HERE
+    const number = 'PS0000124616:12345' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('COLIS_PRIVE', number))
+    return expect(couriers.COLIS_PRIVE.track(number))
       .to.eventually.nested.include({
         id: 'COLIS_PRIVE',
         number
@@ -146,83 +123,21 @@ describe('Colis Privé', function () {
   })
 
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
-    const number = '00000000000000000'
+    const number = '00000000000000000:12345'
 
-    return expect(track('COLIS_PRIVE', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.COLIS_PRIVE.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('COLIS_PRIVE')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.COLIS_PRIVE.track()).to.be.rejected
+  })
+
+  it('track - should fail tracking without zip code', function () {
+    return expect(couriers.COLIS_PRIVE.track('123')).to.be.rejectedWith('zipCode')
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('COLIS_PRIVE', '123')).to.be.rejectedWith('Tracking data not found')
-  })
-})
-
-describe('Colissimo', function () {
-  it('identify - should succeed with matching tracking number', function () {
-    const ids = [identify('0A012345678A9')]
-
-    for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('COLISSIMO')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('COLISSIMO')
-    }
-  })
-
-  it('identify - should fail with not matching tracking number', function () {
-    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
-
-    for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('COLISSIMO')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('COLISSIMO')
-    }
-  })
-
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '6A16072081731' // EDIT TRACKING NUMBER HERE
-
-    return expect(track('COLISSIMO', number))
-      .to.eventually.nested.include({
-        id: 'COLISSIMO',
-        number
-      })
-      .and.to.have.property('steps')
-      .instanceOf(Array).that.is.not.empty
-  })
-
-  it('track - should succeed routing tracking to Chronopost tracker with a Chronopost tracking number', function () {
-    const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
-
-    return expect(track('COLISSIMO', number))
-      .to.eventually.nested.include({
-        id: 'CHRONOPOST',
-        number
-      })
-      .and.to.have.property('steps')
-      .instanceOf(Array).that.is.not.empty
-  })
-
-  it('track - should fail tracking unexisting (but valid) tracking number', function () {
-    const number = '0A012345678A9'
-
-    return expect(track('COLISSIMO', number)).to.be.rejectedWith('Tracking data not found')
-  })
-
-  it('track - should fail tracking without tracking number', function () {
-    return expect(track('COLISSIMO')).to.be.rejectedWith('Input data missing')
-  })
-
-  it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('COLISSIMO', '123')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.COLIS_PRIVE.track('123:12345')).to.be.rejectedWith('notFound')
   })
 })
 
@@ -256,9 +171,9 @@ describe('DHL', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = '8207336244' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('DHL', number))
+    return expect(couriers.DHL.track(number))
       .to.eventually.nested.include({
-        id: 'DHL',
+        courier: 'DHL',
         number
       })
       .and.to.have.property('steps')
@@ -268,15 +183,15 @@ describe('DHL', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '0000000000'
 
-    return expect(track('DHL', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.DHL.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('DHL')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.DHL.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('DHL', '123')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.DHL.track('123')).to.be.rejectedWith('notFound')
   })
 })
 
@@ -310,9 +225,9 @@ describe('DPD', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = '15976884309292' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('DPD', number))
+    return expect(couriers.DPD.track(number))
       .to.eventually.nested.include({
-        id: 'DPD',
+        courier: 'DPD',
         number
       })
       .and.to.have.property('steps')
@@ -322,15 +237,15 @@ describe('DPD', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '000000000000000'
 
-    return expect(track('DPD', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.DPD.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('DPD')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.DPD.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('DPD', '123')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.DPD.track('123')).to.be.rejectedWith('notFound')
   })
 })
 
@@ -369,9 +284,9 @@ describe('Fedex', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = '61299994616052093824' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('FEDEX', number))
+    return expect(couriers.FEDEX.track(number))
       .to.eventually.nested.include({
-        id: 'FEDEX',
+        courier: 'FEDEX',
         number
       })
       .and.to.have.property('steps')
@@ -381,15 +296,15 @@ describe('Fedex', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '0000000000000000000000'
 
-    return expect(track('FEDEX', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.FEDEX.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('FEDEX')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.FEDEX.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('FEDEX', '123')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.FEDEX.track('123')).to.be.rejectedWith('notFound')
   })
 })
 
@@ -429,9 +344,9 @@ describe('GLS', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = 'ZWKU9U2E' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('GLS', number))
+    return expect(couriers.GLS.track(number))
       .to.eventually.nested.include({
-        id: 'GLS',
+        courier: 'GLS',
         number
       })
       .and.to.have.property('steps')
@@ -441,24 +356,92 @@ describe('GLS', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = 'XXXX0X0X'
 
-    return expect(track('GLS', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.GLS.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('GLS')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.GLS.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('GLS', '4683271')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.GLS.track('4683271')).to.be.rejectedWith('notFound')
+  })
+})
+
+describe('La Poste', function () {
+  it('identify - should succeed with matching tracking number', function () {
+    const ids = [identify('0A012345678A9')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('LA_POSTE')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('LA_POSTE')
+    }
+  })
+
+  it('identify - should fail with not matching tracking number', function () {
+    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
+
+    for (const id of ids) {
+      expect(id)
+        .to.have.property('rest')
+        .that.include('LA_POSTE')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('LA_POSTE')
+    }
+  })
+
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
+    const number = '6A16072081731' // EDIT TRACKING NUMBER HERE
+
+    return expect(couriers.LA_POSTE.track(number))
+      .to.eventually.nested.include({
+        courier: 'LA_POSTE',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should succeed routing tracking to Chronopost tracker with a Chronopost tracking number', function () {
+    const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
+
+    return expect(couriers.LA_POSTE.track(number))
+      .to.eventually.nested.include({
+        courier: 'CHRONOPOST',
+        number
+      })
+      .and.to.have.property('steps')
+      .instanceOf(Array).that.is.not.empty
+  })
+
+  it('track - should fail tracking unexisting (but valid) tracking number', function () {
+    const number = '0A012345678A9'
+
+    return expect(couriers.LA_POSTE.track(number)).to.be.rejectedWith('notFound')
+  })
+
+  it('track - should fail tracking without tracking number', function () {
+    return expect(couriers.LA_POSTE.track()).to.be.rejected
+  })
+
+  it('track - should fail tracking an invalid tracking number', function () {
+    return expect(couriers.LA_POSTE.track('123')).to.be.rejectedWith('notFound')
   })
 })
 
 describe('Mondial Relay', function () {
   it('identify - should succeed with matching tracking number', function () {
     const ids = [
-      identify('01234567'),
+      identify('AB01234D'),
+      identify('01234567890123'),
       identify('0123456789'),
-      identify('012345678901')
+      identify('01234567890123456789'),
+      identify('7D012345678D2')
     ]
 
     for (const id of ids) {
@@ -487,9 +470,9 @@ describe('Mondial Relay', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = '1234567890' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('MONDIAL_RELAY', number))
+    return expect(couriers.MONDIAL_RELAY.track(number))
       .to.eventually.nested.include({
-        id: 'MONDIAL_RELAY',
+        courier: 'MONDIAL_RELAY',
         number
       })
       .and.to.have.property('steps')
@@ -499,28 +482,25 @@ describe('Mondial Relay', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '2583420434:12345'
 
-    return expect(track('MONDIAL_RELAY', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.MONDIAL_RELAY.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('MONDIAL_RELAY')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.MONDIAL_RELAY.track()).to.be.rejected
   })
 
   it('track - should fail tracking without zip code', function () {
-    return expect(track('MONDIAL_RELAY', '46832718')).to.be.rejectedWith('Zip code missing')
+    return expect(couriers.MONDIAL_RELAY.track('46832718')).to.be.rejectedWith('zipCode')
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('MONDIAL_RELAY', '4683271:12345')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.MONDIAL_RELAY.track('4683271:12345')).to.be.rejectedWith('notFound')
   })
 })
 
 describe('TNT', function () {
   it('identify - should succeed with matching tracking number', function () {
-    const ids = [
-      identify('012345678'),
-      identify('0123456789012345')
-    ]
+    const ids = [identify('012345678'), identify('0123456789012345')]
 
     for (const id of ids) {
       expect(id)
@@ -546,11 +526,11 @@ describe('TNT', function () {
   })
 
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '012345678' // EDIT TRACKING NUMBER HERE
+    const number = '457446670' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('TNT', number))
+    return expect(couriers.TNT.track(number))
       .to.eventually.nested.include({
-        id: 'TNT',
+        courier: 'TNT',
         number
       })
       .and.to.have.property('steps')
@@ -558,17 +538,17 @@ describe('TNT', function () {
   })
 
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
-    const number = '111222333'
+    const number = '012345678'
 
-    return expect(track('TNT', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.TNT.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('TNT')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.TNT.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('TNT', '4683271')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.TNT.track('4683271')).to.be.rejectedWith('notFound')
   })
 })
 
@@ -608,9 +588,9 @@ describe('UPS', function () {
   it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
     const number = '1Z999AA10123456784' // EDIT TRACKING NUMBER HERE
 
-    return expect(track('UPS', number))
+    return expect(couriers.UPS.track(number))
       .to.eventually.nested.include({
-        id: 'UPS',
+        courier: 'UPS',
         number
       })
       .and.to.have.property('steps')
@@ -620,14 +600,14 @@ describe('UPS', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = 'A0123456789'
 
-    return expect(track('UPS', number)).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.UPS.track(number)).to.be.rejectedWith('notFound')
   })
 
   it('track - should fail tracking without tracking number', function () {
-    return expect(track('UPS')).to.be.rejectedWith('Input data missing')
+    return expect(couriers.UPS.track()).to.be.rejected
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(track('UPS', '4683271')).to.be.rejectedWith('Tracking data not found')
+    return expect(couriers.UPS.track('4683271')).to.be.rejectedWith('notFound')
   })
 })
