@@ -2,14 +2,14 @@ import get from 'lodash.get'
 
 import errors from '../../utils/errors'
 
-const scrape = function glsScraper (data) {
+const scrape = function upsScraper (data) {
   if (!data) {
     throw errors.noData
   }
 
-  const pkg = get(data, 'tuStatus[0].history')
+  const pkg = get(data, 'trackDetails[0].shipmentProgressActivities')
 
-  if (pkg && pkg.length) {
+  if (pkg) {
     return pkg
   }
 

@@ -1,24 +1,17 @@
+import he from 'he'
 import moment from 'moment-timezone'
 
-const format = function glsFormatter (data) {
+const format = function upsFormatter (data) {
   const steps = []
 
   for (const step of data) {
-    let location = null
-
-    if (step.address && step.address.countryName) {
-      if (step.address.city) {
-        location = `${step.address.city}, ${step.address.countryName}`
-      } else {
-        location = `${step.address.countryName}`
-      }
+    if (step.activityScan) {
+      steps.push({
+        datetime: +moment.tz(`${step.date} ${step.time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
+        location: step.location,
+        activity: he.decode(step.activityScan)
+      })
     }
-
-    steps.push({
-      location,
-      status: step.evtDscr,
-      datetime: +moment.tz(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr', 'Europe/Paris')
-    })
   }
 
   return steps
