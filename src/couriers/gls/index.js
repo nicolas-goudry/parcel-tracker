@@ -26,7 +26,7 @@ class GLS extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    return new Parcel(number, this.id, format(scrape(response.data, this.errors)), opts)
+    return new Parcel(number, this.id, format(scrape(response.data)), opts)
   }
 }
 
