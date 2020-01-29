@@ -14,7 +14,7 @@ const scrape = async function chronopostScraper (data) {
   const parsedData = await xml2js(data)
 
   if (get(parsedData, 'Rapport.Erreur[0].Code[0]') === 'MSG_AUCUN_NUMERO_LT') {
-    throw Error('invalidNumber')
+    throw errors.notFound
   }
 
   if (get(parsedData, 'Reponse.Objet[0].Code_Erreur[0]') === 'MSG_AUCUN_EVT') {
