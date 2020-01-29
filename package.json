@@ -10,7 +10,8 @@
     "build": "parcel build src/index.js --out-dir lib --out-file parcel-tracker.js --no-source-maps --target node"
   },
   "mocha": {
-    "timeout": 5000
+    "timeout": 10000,
+    "slow": 5000
   },
   "pre-commit": [
     "format",
