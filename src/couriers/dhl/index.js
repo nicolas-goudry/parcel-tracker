@@ -57,7 +57,11 @@ class DHL extends Courier {
         throw errors.notFound
       }
 
-      throw errors.internal.call(this, error)
+      if (error.message !== 'notFound' && error.message !== 'noData') {
+        throw errors.internal.call(this, error)
+      }
+
+      throw error
     }
 
     return new Parcel(number, this.id, steps, opts)
