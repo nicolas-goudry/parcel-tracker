@@ -15,7 +15,7 @@ const makeOpts = (number) => {
 }
 
 class GLS extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     const response = await axios(makeOpts(number)).catch((err) => {
@@ -26,7 +26,11 @@ class GLS extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    return new Parcel(number, this.id, format(scrape(response.data)), opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps: format(scrape(response.data))
+    })
   }
 }
 

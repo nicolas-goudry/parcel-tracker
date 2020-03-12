@@ -22,14 +22,18 @@ const makeOpts = (number) => {
 }
 
 class UPS extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     const response = await axios(makeOpts(number)).catch((err) => {
       throw errors.internal.call(this, err)
     })
 
-    return new Parcel(number, this.id, format(scrape(response.data)), opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps: format(scrape(response.data))
+    })
   }
 }
 

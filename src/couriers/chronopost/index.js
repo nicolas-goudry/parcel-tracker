@@ -14,7 +14,7 @@ const makeOpts = (number) => {
 }
 
 class Chronopost extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     const response = await axios(makeOpts(number)).catch((err) => {
@@ -22,7 +22,11 @@ class Chronopost extends Courier {
     })
     const rawSteps = await scrape(response.data)
 
-    return new Parcel(number, this.id, format(rawSteps), opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps: format(rawSteps)
+    })
   }
 }
 

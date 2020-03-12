@@ -32,7 +32,7 @@ const makeOpts = async (number) => {
 }
 
 class LaPoste extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     const axiosOptions = await makeOpts(number).catch((err) => {
@@ -49,10 +49,14 @@ class LaPoste extends Courier {
     })
 
     if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
-      return chronopost.track(number, opts)
+      return chronopost.track(number)
     }
 
-    return new Parcel(number, this.id, format(scrape(response.data)), opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps: format(scrape(response.data))
+    })
   }
 }
 

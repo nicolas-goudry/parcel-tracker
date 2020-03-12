@@ -18,7 +18,7 @@ const makeOpts = (number, zipCode) => {
 }
 
 class ColisPrive extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     const [_number, zipCode] = number.split(':')
@@ -31,7 +31,11 @@ class ColisPrive extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    return new Parcel(number, this.id, format(scrape(response.data)), opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps: format(scrape(response.data))
+    })
   }
 }
 

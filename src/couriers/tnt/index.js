@@ -22,7 +22,7 @@ const makeOpts = (number) => {
 }
 
 class TNT extends Courier {
-  async track (number, opts) {
+  async track (number) {
     super.track(number)
 
     let steps
@@ -48,7 +48,11 @@ class TNT extends Courier {
       throw error
     }
 
-    return new Parcel(number, this.id, steps, opts)
+    return Parcel({
+      id: number,
+      courier: this.id,
+      steps
+    })
   }
 }
 
