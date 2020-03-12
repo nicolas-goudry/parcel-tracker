@@ -21,6 +21,10 @@ const stepRule = joi
   .label('Parcel step')
 
 const rules = {
+  lang: joi
+    .string()
+    .default('fr_FR')
+    .label('Parcel language'),
   number: joi
     .string()
     .required()
