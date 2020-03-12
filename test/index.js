@@ -8,6 +8,19 @@ chai.use(chaiAsPromised)
 
 const expect = chai.expect
 
+const validNumbers = {
+  CHRONOPOST: 'HT123581943JF',
+  COLIS_PRIVE: 'ND000003520293600',
+  DHL: '1324601526',
+  DPD: '15976895842176-DPD',
+  FEDEX: '391019544600',
+  GLS: '988912949343',
+  LA_POSTE: 'CC883675172FR',
+  MONDIAL_RELAY: '46932692',
+  TNT: '750776312',
+  UPS: '1Z999AA10123456784'
+}
+
 describe('All couriers', function () {
   it('should export all couriers', function () {
     expect(couriers).to.have.any.keys(
@@ -56,15 +69,15 @@ describe('Chronopost', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.CHRONOPOST
 
     return expect(couriers.CHRONOPOST.track(number))
       .to.eventually.nested.include({
-        courier: 'CHRONOPOST',
-        number
+        'shipment.product': 'CHRONOPOST',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -110,15 +123,15 @@ describe('Colis Prive', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = 'PS0000124616:12345' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.COLIS_PRIVE
 
     return expect(couriers.COLIS_PRIVE.track(number))
       .to.eventually.nested.include({
-        id: 'COLIS_PRIVE',
-        number
+        'shipment.product': 'COLIS_PRIVE',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -168,15 +181,15 @@ describe('DHL', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '8207336244' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.DHL
 
     return expect(couriers.DHL.track(number))
       .to.eventually.nested.include({
-        courier: 'DHL',
-        number
+        'shipment.product': 'DHL',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -222,15 +235,15 @@ describe('DPD', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '15976884309292' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.DPD
 
     return expect(couriers.DPD.track(number))
       .to.eventually.nested.include({
-        courier: 'DPD',
-        number
+        'shipment.product': 'DPD',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -281,15 +294,15 @@ describe('Fedex', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '61299994616052093824' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.FEDEX
 
     return expect(couriers.FEDEX.track(number))
       .to.eventually.nested.include({
-        courier: 'FEDEX',
-        number
+        'shipment.product': 'FEDEX',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -341,15 +354,15 @@ describe('GLS', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = 'ZWKU9U2E' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.GLS
 
     return expect(couriers.GLS.track(number))
       .to.eventually.nested.include({
-        courier: 'GLS',
-        number
+        'shipment.product': 'GLS',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -395,27 +408,27 @@ describe('La Poste', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '6A16072081731' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.LA_POSTE
 
     return expect(couriers.LA_POSTE.track(number))
       .to.eventually.nested.include({
-        courier: 'LA_POSTE',
-        number
+        'shipment.product': 'LA_POSTE',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
   it('track - should succeed routing tracking to Chronopost tracker with a Chronopost tracking number', function () {
-    const number = 'XJ006848316JF' // EDIT TRACKING NUMBER HERE
+    const number = 'XJ006848316JF'
 
     return expect(couriers.LA_POSTE.track(number))
       .to.eventually.nested.include({
-        courier: 'CHRONOPOST',
-        number
+        'shipment.product': 'CHRONOPOST',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -467,15 +480,15 @@ describe('Mondial Relay', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '1234567890' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.MONDIAL_RELAY
 
     return expect(couriers.MONDIAL_RELAY.track(number))
       .to.eventually.nested.include({
-        courier: 'MONDIAL_RELAY',
-        number
+        'shipment.product': 'MONDIAL_RELAY',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -525,15 +538,15 @@ describe('TNT', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '457446670' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.TNT
 
     return expect(couriers.TNT.track(number))
       .to.eventually.nested.include({
-        courier: 'TNT',
-        number
+        'shipment.product': 'TNT',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
@@ -585,15 +598,15 @@ describe('UPS', function () {
     }
   })
 
-  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH A WORKING TRACKING NUMBER)', function () {
-    const number = '1Z999AA10123456784' // EDIT TRACKING NUMBER HERE
+  it('track - should succeed tracking a valid tracking number (PLEASE EDIT TEST FILE WITH WORKING TRACKING NUMBERS)', function () {
+    const number = validNumbers.UPS
 
     return expect(couriers.UPS.track(number))
       .to.eventually.nested.include({
-        courier: 'UPS',
-        number
+        'shipment.product': 'UPS',
+        'shipment.idShip': number
       })
-      .and.to.have.property('steps')
+      .and.to.have.nested.property('shipment.event')
       .instanceOf(Array).that.is.not.empty
   })
 
