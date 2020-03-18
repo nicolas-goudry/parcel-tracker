@@ -17,10 +17,12 @@
     "timeout": 10000,
     "slow": 5000
   },
-  "pre-commit": [
-    "format",
-    "lint"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm test"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicolas-goudry/parcel-tracker.git"
@@ -44,9 +46,9 @@
     "eslint-plugin-node": "11.0.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
+    "husky": "4.2.3",
     "mocha": "7.1.1",
     "parcel-bundler": "1.12.4",
-    "pre-commit": "1.2.2",
     "prettier": "1.19.1",
     "standard": "14.3.3"
   },
