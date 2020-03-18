@@ -8,9 +8,9 @@
 [semver]: http://semver.org
 [tags]: https://github.com/nicolas-goudry/parcel-tracker/releases
 
-# Parcel Tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url]
+# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url]
 
-Parcel Tracker is a Javascript library which can track parcels from numerous couriers. It can also guess courier from a tracking number.
+parcel-tracker is a Javascript library which can track parcels from numerous couriers. It can also guess courier from a tracking number.
 
 Supported couriers are :
 * Chronopost
@@ -34,13 +34,15 @@ We use [`parcel`][parcel] in order to build project. It uses [`babel`][babel] un
 
 ### Installing
 
-Install Parcel Tracker as a dependency to your project :
+parcel-tracker is hosted on a private npm registry. You need an account on this registry in order to add it as a dependency to your project. You may ask author for an access.
 
 ```shell
-$ npm i -S git@github.com:nicolas-goudry/parcel-tracker.git#latest
+$ npm i -S parcel-tracker --registry http://ec2-35-171-163-20.compute-1.amazonaws.com/
 ```
 
-Then, here’s how you can use Parcel Tracker :
+### Usage
+
+Here is an example on how you *could* implement a sequential auto-tracking feature:
 
 ```js
 const { identify, couriers } = require('parcel-tracker')
@@ -55,10 +57,16 @@ const candidates = identify(number)
 ;(async () => {
   // We process couriers keys (first 'candidates', then 'rest')
   for (const key in candidates) {
+    console.log('Processing', key)
+
     // For each key, we try to track number with listed couriers
     for (const courier of candidates[key]) {
+      process.stdout.write(`  - ${couriers[courier].name}`)
+
       try {
         const parcel = await couriers[courier].track(number, { chrono: false })
+
+        process.stdout.write(' \x1b[32mSUCCEED\x1b[0m\n')
 
         return parcel
         // Object with 4 keys :
@@ -67,11 +75,13 @@ const candidates = identify(number)
         // - number: parcel number
         // - steps: parcel steps in shape of { datetime, location, status }
       } catch (err) {
-        console.error(err)
+        process.stdout.write(` \x1b[31mFAILED (${err.message})\x1b[0m\n`)
       }
     }
   }
-})()
+})().then((res) => {
+  console.log('\n', JSON.stringify(res, null, 2))
+})
 ```
 
 ## Running the tests

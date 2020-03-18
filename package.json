@@ -1,6 +1,6 @@
 {
   "name": "parcel-tracker",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Parcel tracker can get parcel tracking data from multiple couriers",
   "main": "lib/parcel-tracker.js",
   "files": [
