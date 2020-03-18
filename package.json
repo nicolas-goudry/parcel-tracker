@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "format": "prettier src/**/*.js --write",
-    "lint": "eslint src --fix",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix",
     "test": "mocha test/index.js",
     "build": "parcel build src/index.js --out-dir lib --out-file parcel-tracker.js --no-source-maps --target node"
   },
