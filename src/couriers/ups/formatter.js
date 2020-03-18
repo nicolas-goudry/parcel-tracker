@@ -1,7 +1,9 @@
 import he from 'he'
 import moment from 'moment-timezone'
 
-const format = function upsFormatter (data) {
+const format = function upsFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   for (const step of data) {

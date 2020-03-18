@@ -5,7 +5,9 @@ const stepMatcher = {
   'Prise en charge en agence ': 'Prise en charge en agence'
 }
 
-const format = function mondialRelayFormatter (data) {
+const format = function mondialRelayFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   data.each((i, step) => {

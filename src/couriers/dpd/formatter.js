@@ -1,7 +1,9 @@
 import cheerio from 'cheerio'
 import moment from 'moment-timezone'
 
-const format = function dpdFormatter (data) {
+const format = function dpdFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   if (data.scan) {

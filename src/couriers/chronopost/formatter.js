@@ -1,7 +1,9 @@
 import get from 'lodash.get'
 import moment from 'moment-timezone'
 
-const format = function chronopostFormatter (data) {
+const format = function chronopostFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   for (const step of data) {

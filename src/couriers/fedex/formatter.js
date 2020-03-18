@@ -1,6 +1,8 @@
 import moment from 'moment-timezone'
 
-const format = function fedexFormatter (data) {
+const format = function fedexFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   for (const step of data) {

@@ -1,6 +1,8 @@
 import moment from 'moment-timezone'
 
-const format = function glsFormatter (data) {
+const format = function glsFormatter (data, log) {
+  log('formatting data')
+
   const steps = []
 
   for (const step of data) {

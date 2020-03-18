@@ -34,17 +34,23 @@ const makeOpts = (number) => {
 }
 
 class DHL extends Courier {
-  async track (number) {
-    super.track(number)
+  async track (number, log) {
+    super.track(number, log)
+
+    this.log('performing multiple http calls...')
 
     let steps
     let error
 
     for (const axiosOpts of makeOpts(number)) {
       try {
+        this.log('performing http call to retrieve tracking data')
+
         const response = await axios(axiosOpts)
 
-        steps = format(scrape(response.data))
+        steps = format(scrape(response.data, this.log), this.log)
+
+        this.log('data retrieved')
 
         break
       } catch (err) {
@@ -53,6 +59,9 @@ class DHL extends Courier {
     }
 
     if (error && !steps) {
+      this.log('failed to retrieve tracking data')
+      this.log(error)
+
       if (error.response && error.response.status === 400) {
         throw errors.notFound
       }
@@ -64,11 +73,16 @@ class DHL extends Courier {
       throw error
     }
 
-    return Parcel({
+    const parcel = Parcel({
       id: number,
       courier: this.id,
       steps
     })
+
+    this.log('tracking result')
+    this.log(parcel)
+
+    return parcel
   }
 }
 

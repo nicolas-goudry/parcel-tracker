@@ -1,4 +1,5 @@
 import joi from '@hapi/joi'
+import createDebugger from 'debug'
 
 import rules from './validation'
 
@@ -35,7 +36,11 @@ export default class Courier {
    * @throws {ValidationError} Joi validation error
    * @see https://hapi.dev/family/joi/api/?v=16.1.8#validationerror
    */
-  track (number) {
+  track (number, log = createDebugger(`parcel-tracker:${this.id.toLowerCase()}`)) {
+    this.log = log
+
+    this.log('validate tracking number')
+
     joi.assert(number, rules.number)
   }
 }

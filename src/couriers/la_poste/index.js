@@ -32,13 +32,24 @@ const makeOpts = async (number) => {
 }
 
 class LaPoste extends Courier {
-  async track (number) {
-    super.track(number)
+  async track (number, log) {
+    super.track(number, log)
+
+    this.log('performing http call to get call parameters')
 
     const axiosOptions = await makeOpts(number).catch((err) => {
+      this.log('failed to retrieve call parameters')
+      this.log(err)
+
       throw errors.internal.call(this, err)
     })
+
+    this.log('performing http call to retrieve tracking data')
+
     const response = await axios(axiosOptions).catch((err) => {
+      this.log('failed to retrieve tracking data')
+      this.log(err)
+
       const status = get(err, 'response.status')
 
       if ((status === 404 || status === 400) && err.response.data) {
@@ -49,14 +60,23 @@ class LaPoste extends Courier {
     })
 
     if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
+      this.log('parcel is owned by chronopost, performing a new tracking with this courier')
+
       return chronopost.track(number)
     }
 
-    return Parcel({
+    this.log('data retrieved')
+
+    const parcel = Parcel({
       id: number,
       courier: this.id,
-      steps: format(scrape(response.data))
+      steps: format(scrape(response.data, this.log), this.log)
     })
+
+    this.log('tracking result')
+    this.log(parcel)
+
+    return parcel
   }
 }
 

@@ -10,7 +10,9 @@ const stepMatcher = {
   "Traitée à l'agence DHL de ": "Traitée à l'agence DHL"
 }
 
-const format = function dhlFormatter (data) {
+const format = function dhlFormatter (data, log) {
+  log('formatting data')
+
   let iterator = []
   let dateParse
 

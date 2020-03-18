@@ -15,10 +15,15 @@ const makeOpts = (number) => {
 }
 
 class GLS extends Courier {
-  async track (number) {
-    super.track(number)
+  async track (number, log) {
+    super.track(number, log)
+
+    this.log('performing http call to retrieve tracking data')
 
     const response = await axios(makeOpts(number)).catch((err) => {
+      this.log('failed to retrieve tracking data')
+      this.log(err)
+
       if (err.response && err.response.status === 404 && err.response.data) {
         throw errors.notFound
       }
@@ -26,11 +31,18 @@ class GLS extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    return Parcel({
+    this.log('data retrieved')
+
+    const parcel = Parcel({
       id: number,
       courier: this.id,
-      steps: format(scrape(response.data))
+      steps: format(scrape(response.data, this.log), this.log)
     })
+
+    this.log('tracking result')
+    this.log(parcel)
+
+    return parcel
   }
 }
 

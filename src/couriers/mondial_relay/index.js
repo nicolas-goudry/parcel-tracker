@@ -23,18 +23,27 @@ const makeOpts = (number, zipCode) => {
 }
 
 class MondialRelay extends Courier {
-  async track (number) {
-    super.track(number)
+  async track (number, log) {
+    super.track(number, log)
 
     const [_number, zipCode] = number.split(':')
 
     if (_number.length === 8) {
+      this.log('testing for zip code presence')
+
       if (!zipCode) {
+        this.log('zip code missing')
+
         throw errors.zipCode
       }
     }
 
+    this.log('performing http call to retrieve tracking data')
+
     const response = await axios(makeOpts(_number, zipCode)).catch((err) => {
+      this.log('failed to retrieve tracking data')
+      this.log(err)
+
       if (err.response && err.response.status === 404 && err.response.data) {
         throw errors.notFound
       }
@@ -42,11 +51,16 @@ class MondialRelay extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    return Parcel({
+    const parcel = Parcel({
       id: number,
       courier: this.id,
-      steps: format(scrape(response.data))
+      steps: format(scrape(response.data, this.log), this.log)
     })
+
+    this.log('tracking result')
+    this.log(parcel)
+
+    return parcel
   }
 }
 

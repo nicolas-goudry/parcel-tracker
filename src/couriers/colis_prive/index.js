@@ -18,24 +18,40 @@ const makeOpts = (number, zipCode) => {
 }
 
 class ColisPrive extends Courier {
-  async track (number) {
-    super.track(number)
+  async track (number, log) {
+    super.track(number, log)
 
-    const [_number, zipCode] = number.split(':')
+    this.log('testing for zip code presence')
+
+    const [num, zipCode] = number.split(':')
 
     if (!zipCode) {
+      this.log('zip code missing')
+
       throw errors.zipCode
     }
 
-    const response = await axios(makeOpts(_number, zipCode)).catch((err) => {
+    this.log('performing http call to retrieve tracking data')
+
+    const response = await axios(makeOpts(num, zipCode)).catch((err) => {
+      this.log('failed to retrieve tracking data')
+      this.log(err)
+
       throw errors.internal.call(this, err)
     })
 
-    return Parcel({
+    this.log('data retrieved')
+
+    const parcel = Parcel({
       id: number,
       courier: this.id,
-      steps: format(scrape(response.data))
+      steps: format(scrape(response.data, this.log), this.log)
     })
+
+    this.log('tracking result')
+    this.log(parcel)
+
+    return parcel
   }
 }
 
