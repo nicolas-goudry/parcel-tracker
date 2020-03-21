@@ -88,6 +88,12 @@ const candidates = identify(number)
 })
 ```
 
+#### Logging
+
+By default, parcel-tracker uses `debug`. You can define env variable `DEBUG` to `parcel-tracker:*` to enable it.
+
+Optionaly, you could pass a logging function as a second argument to `track` and `identify`. This would override the use of `debug`.
+
 ## Running the tests
 
 We use [`mocha`][mocha] as test runner and [`chai`][chai] for assertions (with [`chai-as-promised`][chaiAsPromised]).
