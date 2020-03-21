@@ -64,7 +64,7 @@ const candidates = identify(number)
       process.stdout.write(`  - ${couriers[courier].name}`)
 
       try {
-        const parcel = await couriers[courier].track(number, { chrono: false })
+        const parcel = await couriers[courier].track(number)
 
         process.stdout.write(' \x1b[32mSUCCEED\x1b[0m\n')
 
@@ -80,7 +80,11 @@ const candidates = identify(number)
     }
   }
 })().then((res) => {
-  console.log('\n', JSON.stringify(res, null, 2))
+  if (res) {
+    console.log('\n', JSON.stringify(res, null, 2))
+  } else {
+    console.error(number, 'NOT FOUND')
+  }
 })
 ```
 
