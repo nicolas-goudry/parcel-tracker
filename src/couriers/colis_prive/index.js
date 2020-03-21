@@ -8,12 +8,8 @@ import scrape from './scraper'
 
 const makeOpts = (number, zipCode) => {
   return {
-    method: 'post',
-    url: 'https://www.colisprive.com/moncolis/colis-iframe.aspx',
-    params: {
-      identifiant: number,
-      cp: zipCode
-    }
+    method: 'get',
+    url: `https://www.colisprive.com/moncolis/pages/detailColis.aspx?numColis=${number}${zipCode}`
   }
 }
 
@@ -56,7 +52,8 @@ class ColisPrive extends Courier {
 }
 
 const colisPrive = new ColisPrive('COLIS_PRIVE', 'Colis Privé', [
-  /\b(\d{17})\b/i // 00000000000000000
+  /\b(\d{17})\b/i, // 00000000000000000
+  /\b(\d{12})\b/i // 000000000000
 ])
 
 export default colisPrive
