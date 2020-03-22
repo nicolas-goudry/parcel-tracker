@@ -62,7 +62,6 @@
     "lodash.get": "4.4.2",
     "moment": "2.24.0",
     "moment-timezone": "0.5.28",
-    "tiny-invariant": "1.1.0",
     "xml2js": "0.4.23"
   }
 }

@@ -27,7 +27,7 @@ const scrape = function fedexScraper (data, log) {
     log('courrier error:')
     log(err)
 
-    throw errors.unknown(err)
+    throw errors.unknown(err, log)
   }
 
   log('searching for parcel data')
