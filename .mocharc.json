@@ -1,0 +1,5 @@
+{
+  "timeout": 30000,
+  "slow": 2000,
+  "tls-min-v1.0": true
+}

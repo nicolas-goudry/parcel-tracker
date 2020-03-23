@@ -13,11 +13,6 @@
     "test": "mocha test/index.js",
     "build": "parcel build src/index.js --out-dir lib --out-file parcel-tracker.js --no-source-maps --target node"
   },
-  "mocha": {
-    "timeout": 10000,
-    "slow": 5000,
-    "tls-min-v1.0": true
-  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
