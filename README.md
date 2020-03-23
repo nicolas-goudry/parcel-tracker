@@ -4,6 +4,7 @@
 [chai]: https://chaijs.com
 [parcel]: https://parceljs.org
 [babel]: https://babeljs.io
+[debug]: https://github.com/visionmedia/debug
 [chaiAsPromised]: https://www.chaijs.com/plugins/chai-as-promised
 [prettier]: https://prettier.io
 [commitizen]: http://commitizen.github.io/cz-cli
@@ -95,7 +96,7 @@ const candidates = identify(number)
 
 #### Logging
 
-By default, parcel-tracker uses `debug`. You can define env variable `DEBUG` to `parcel-tracker:*` to enable it.
+By default, parcel-tracker uses [`debug`][debug]. You can define env variable `DEBUG` to `parcel-tracker:*` to enable it.
 
 Optionaly, you could pass a logging function as a second argument to `track` and `identify`. This would override the use of `debug`.
 
@@ -123,13 +124,13 @@ $ npm test
 
 ### Git workflow
 
-Some hooks are defined with [husky][husky] :
+Some hooks are defined with [`husky`][husky] :
 
 * `prepare-commit-msg` : run commitizen => **see below**
 * `pre-commit` : lint codebase
 * `pre-push` : run tests
 
-We use [commitizen][commitizen] to ensure proper commit format.
+We use [`commitizen`][commitizen] to ensure proper commit format.
 
 **Warning :** if you are using a git GUI (like GitKraken), you won’t be able to commit from those tools due to commitizen interactive commits. **You have to commit from CLI :**
 
@@ -143,7 +144,7 @@ We use [standard code style][standard:url].
 
 ### Code formatting
 
-We use [prettier code formatter][prettier] with a [custom configuration][.prettierrc].
+We use [`prettier` code formatter][prettier] with a [custom configuration][.prettierrc].
 
 ### Versioning
 
