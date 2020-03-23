@@ -7,6 +7,7 @@
 [chaiAsPromised]: https://www.chaijs.com/plugins/chai-as-promised
 [semver]: http://semver.org
 [tags]: https://github.com/nicolas-goudry/parcel-tracker/releases
+[.mocharc.json]: ./.mocharc.json
 
 # parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url]
 
@@ -34,7 +35,7 @@ We use [`parcel`][parcel] in order to build project. It uses [`babel`][babel] un
 
 ### Installing
 
-parcel-tracker is hosted on a private npm registry. You need an account on this registry in order to add it as a dependency to your project. You may ask author for an access.
+parcel-tracker is hosted on a private npm registry. You need an account on this registry in order to add it as a dependency to your project. You may ask the author for an access.
 
 ```shell
 $ npm i -S parcel-tracker --registry http://ec2-35-171-163-20.compute-1.amazonaws.com/
@@ -47,7 +48,7 @@ Here is an example on how you *could* implement a sequential auto-tracking featu
 ```js
 const { identify, couriers } = require('parcel-tracker')
 
-const number = 'XJ006848316JF'
+const number = 'YOUR_TRACKING_NUMBER_HERE'
 const candidates = identify(number)
 // Object with 2 keys :
 // - candidates: contains most probable couriers matching number
@@ -93,6 +94,16 @@ const candidates = identify(number)
 By default, parcel-tracker uses `debug`. You can define env variable `DEBUG` to `parcel-tracker:*` to enable it.
 
 Optionaly, you could pass a logging function as a second argument to `track` and `identify`. This would override the use of `debug`.
+
+#### TLS unsupported protocol issue
+
+If you’re running on Node.js 12 and above, you might came up with following error:
+
+`write EPROTO 139670746232704:error:1425F102:SSL routines:ssl_choose_client_version:unsupported protocol:[...]`
+
+This is because default TLS settings are stricter on those versions of Node.js. TLS v1.2 is the default, but some sites don’t support it yet. In order to make them work, you need to provide following flag to Node.js : `--tls-min-v1.0`.
+
+Tests are not affected, because this option is already provided to [Mocha configuration][.mocharc.json].
 
 ## Running the tests
 
