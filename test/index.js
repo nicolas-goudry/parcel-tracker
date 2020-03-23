@@ -47,12 +47,8 @@ describe('Chronopost', function () {
     const ids = [identify('XX000000000XX'), identify('XX0000000000000'), identify('00000000000000A')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('CHRONOPOST')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('CHRONOPOST')
+      expect(id).to.have.property('candidates').that.includes('CHRONOPOST')
+      expect(id).to.have.property('rest').that.not.include('CHRONOPOST')
     }
   })
 
@@ -60,12 +56,8 @@ describe('Chronopost', function () {
     const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('CHRONOPOST')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('CHRONOPOST')
+      expect(id).to.have.property('rest').that.include('CHRONOPOST')
+      expect(id).to.have.property('candidates').that.not.include('CHRONOPOST')
     }
   })
 
@@ -101,12 +93,8 @@ describe('Colis Prive', function () {
     const ids = [identify('00000000000000000')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('COLIS_PRIVE')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('COLIS_PRIVE')
+      expect(id).to.have.property('candidates').that.includes('COLIS_PRIVE')
+      expect(id).to.have.property('rest').that.not.include('COLIS_PRIVE')
     }
   })
 
@@ -114,12 +102,8 @@ describe('Colis Prive', function () {
     const ids = [identify('4683271')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('COLIS_PRIVE')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('COLIS_PRIVE')
+      expect(id).to.have.property('rest').that.include('COLIS_PRIVE')
+      expect(id).to.have.property('candidates').that.not.include('COLIS_PRIVE')
     }
   })
 
@@ -159,12 +143,8 @@ describe('DHL', function () {
     const ids = [identify('0000000000'), identify('XXXX00000000000000000000')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('DHL')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('DHL')
+      expect(id).to.have.property('candidates').that.includes('DHL')
+      expect(id).to.have.property('rest').that.not.include('DHL')
     }
   })
 
@@ -172,12 +152,8 @@ describe('DHL', function () {
     const ids = [identify('4683271'), identify('AC00000B')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('DHL')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('DHL')
+      expect(id).to.have.property('rest').that.include('DHL')
+      expect(id).to.have.property('candidates').that.not.include('DHL')
     }
   })
 
@@ -213,12 +189,8 @@ describe('DPD', function () {
     const ids = [identify('00000000000000'), identify('000000000000000'), identify('0000000000000000')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('DPD')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('DPD')
+      expect(id).to.have.property('candidates').that.includes('DPD')
+      expect(id).to.have.property('rest').that.not.include('DPD')
     }
   })
 
@@ -226,12 +198,8 @@ describe('DPD', function () {
     const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('DPD')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('DPD')
+      expect(id).to.have.property('rest').that.include('DPD')
+      expect(id).to.have.property('candidates').that.not.include('DPD')
     }
   })
 
@@ -272,12 +240,8 @@ describe('Fedex', function () {
     ]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('FEDEX')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('FEDEX')
+      expect(id).to.have.property('candidates').that.includes('FEDEX')
+      expect(id).to.have.property('rest').that.not.include('FEDEX')
     }
   })
 
@@ -285,12 +249,8 @@ describe('Fedex', function () {
     const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283'), identify('ABCD')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('FEDEX')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('FEDEX')
+      expect(id).to.have.property('rest').that.include('FEDEX')
+      expect(id).to.have.property('candidates').that.not.include('FEDEX')
     }
   })
 
@@ -332,12 +292,8 @@ describe('GLS', function () {
     ]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('GLS')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('GLS')
+      expect(id).to.have.property('candidates').that.includes('GLS')
+      expect(id).to.have.property('rest').that.not.include('GLS')
     }
   })
 
@@ -345,12 +301,8 @@ describe('GLS', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('GLS')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('GLS')
+      expect(id).to.have.property('rest').that.include('GLS')
+      expect(id).to.have.property('candidates').that.not.include('GLS')
     }
   })
 
@@ -386,12 +338,8 @@ describe('La Poste', function () {
     const ids = [identify('0A012345678A9')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('LA_POSTE')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('LA_POSTE')
+      expect(id).to.have.property('candidates').that.includes('LA_POSTE')
+      expect(id).to.have.property('rest').that.not.include('LA_POSTE')
     }
   })
 
@@ -399,12 +347,8 @@ describe('La Poste', function () {
     const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('LA_POSTE')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('LA_POSTE')
+      expect(id).to.have.property('rest').that.include('LA_POSTE')
+      expect(id).to.have.property('candidates').that.not.include('LA_POSTE')
     }
   })
 
@@ -458,12 +402,8 @@ describe('Mondial Relay', function () {
     ]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('MONDIAL_RELAY')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('MONDIAL_RELAY')
+      expect(id).to.have.property('candidates').that.includes('MONDIAL_RELAY')
+      expect(id).to.have.property('rest').that.not.include('MONDIAL_RELAY')
     }
   })
 
@@ -471,12 +411,8 @@ describe('Mondial Relay', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('MONDIAL_RELAY')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('MONDIAL_RELAY')
+      expect(id).to.have.property('rest').that.include('MONDIAL_RELAY')
+      expect(id).to.have.property('candidates').that.not.include('MONDIAL_RELAY')
     }
   })
 
@@ -516,12 +452,8 @@ describe('TNT', function () {
     const ids = [identify('012345678'), identify('0123456789012345')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('TNT')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('TNT')
+      expect(id).to.have.property('candidates').that.includes('TNT')
+      expect(id).to.have.property('rest').that.not.include('TNT')
     }
   })
 
@@ -529,12 +461,8 @@ describe('TNT', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('TNT')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('TNT')
+      expect(id).to.have.property('rest').that.include('TNT')
+      expect(id).to.have.property('candidates').that.not.include('TNT')
     }
   })
 
@@ -576,12 +504,8 @@ describe('UPS', function () {
     ]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('candidates')
-        .that.includes('UPS')
-      expect(id)
-        .to.have.property('rest')
-        .that.not.include('UPS')
+      expect(id).to.have.property('candidates').that.includes('UPS')
+      expect(id).to.have.property('rest').that.not.include('UPS')
     }
   })
 
@@ -589,12 +513,8 @@ describe('UPS', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id)
-        .to.have.property('rest')
-        .that.include('UPS')
-      expect(id)
-        .to.have.property('candidates')
-        .that.not.include('UPS')
+      expect(id).to.have.property('rest').that.include('UPS')
+      expect(id).to.have.property('candidates').that.not.include('UPS')
     }
   })
 
