@@ -5,11 +5,15 @@
 [parcel]: https://parceljs.org
 [babel]: https://babeljs.io
 [chaiAsPromised]: https://www.chaijs.com/plugins/chai-as-promised
+[prettier]: https://prettier.io
+[commitizen]: http://commitizen.github.io/cz-cli
+[husky]: https://github.com/typicode/husky
 [semver]: http://semver.org
 [tags]: https://github.com/nicolas-goudry/parcel-tracker/releases
 [.mocharc.json]: ./.mocharc.json
+[.prettierrc]: ./.prettierrc
 
-# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url]
+# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url] &middot; [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 parcel-tracker is a Javascript library which can track parcels from numerous couriers. It can also guess courier from a tracking number.
 
@@ -112,14 +116,36 @@ We use [`mocha`][mocha] as test runner and [`chai`][chai] for assertions (with [
 To run tests, simply run :
 
 ```shell
-npm test
+$ npm test
 ```
 
-### Coding style
+## Miscellaneous
+
+### Git workflow
+
+Some hooks are defined with [husky][husky] :
+
+* `prepare-commit-msg` : run commitizen => **see below**
+* `pre-commit` : lint codebase
+* `pre-push` : run tests
+
+We use [commitizen][commitizen] to ensure proper commit format.
+
+**Warning :** if you are using a git GUI (like GitKraken), you won’t be able to commit from those tools due to commitizen interactive commits. **You have to commit from CLI :**
+
+```shell
+$ git commit
+```
+
+### Code style
 
 We use [standard code style][standard:url].
 
-## Versioning
+### Code formatting
+
+We use [prettier code formatter][prettier] with a [custom configuration][.prettierrc].
+
+### Versioning
 
 We use [SemVer][semver] for versioning. For the releases available, see the [releases on this repository][tags]. 
 
