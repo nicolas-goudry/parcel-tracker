@@ -456,7 +456,7 @@ describe('La Poste', function () {
   })
 
   it('track - should succeed routing tracking to Chronopost tracker with a Chronopost tracking number', function () {
-    const number = 'XJ006848316JF'
+    const number = validNumbers.CHRONOPOST
 
     return expect(couriers.LA_POSTE.track(number))
       .to.eventually.nested.include({
