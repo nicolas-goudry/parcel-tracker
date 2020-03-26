@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,17 +18,17 @@ jobs:
         node-version: [12.x, 13.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: npm ci --registry http://ec2-35-171-163-20.compute-1.amazonaws.com/
-    - name: Build codebase
-      run: npm run build
-    - name: Run tests
-      run: npm test
-      env:
-        CI: true
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci --registry http://ec2-35-171-163-20.compute-1.amazonaws.com/
+      - name: Build codebase
+        run: npm run build
+      - name: Run tests
+        run: npm test
+        env:
+          CI: true
