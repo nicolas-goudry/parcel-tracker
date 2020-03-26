@@ -3,7 +3,9 @@
   "version": "3.1.1",
   "description": "JavaScript scraper to get parcel tracking data from multiple couriers.",
   "main": "lib/parcel-tracker.js",
-  "files": ["lib/parcel-tracker.js"],
+  "files": [
+    "lib/parcel-tracker.js"
+  ],
   "scripts": {
     "lint": "prettier-standard 'src/**/*.js' --lint",
     "format": "npm run lint -- --format",
