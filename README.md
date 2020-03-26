@@ -2,6 +2,8 @@
 [standard:url]: http://standardjs.com
 [commitizen:img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 [commitizen:url]: http://commitizen.github.io/cz-cli/
+[actions:img]: https://github.com/nicolas-goudry/parcel-tracker/workflows/Node.js%20CI/badge.svg
+[actions:url]: https://github.com/nicolas-goudry/parcel-tracker/actions
 [parcel]: https://parceljs.org
 [babel]: https://babeljs.io
 [debug]: https://github.com/visionmedia/debug
@@ -15,7 +17,11 @@
 [.mocharc.json]: ./.mocharc.json
 [.prettierrc]: ./.prettierrc
 
-# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url] &middot; [![Commitizen friendly][commitizen:img]][commitizen:url]
+# parcel-tracker
+
+[![Standard - JavaScript Style Guide][standard:img]][standard:url]
+[![Commitizen friendly][commitizen:img]][commitizen:url]
+[![Actions Status][actions:img]][actions:url]
 
 parcel-tracker is a Javascript library which can track parcels from numerous couriers. It can also guess courier from a tracking number.
 
