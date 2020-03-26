@@ -44,20 +44,36 @@ describe('All couriers', function () {
 
 describe('Chronopost', function () {
   it('identify - should succeed with matching tracking number', function () {
-    const ids = [identify('XX000000000XX'), identify('XX0000000000000'), identify('00000000000000A')]
+    const ids = [
+      identify('XX000000000XX'),
+      identify('XX0000000000000'),
+      identify('00000000000000A')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('CHRONOPOST')
-      expect(id).to.have.property('rest').that.not.include('CHRONOPOST')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('CHRONOPOST')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('CHRONOPOST')
     }
   })
 
   it('identify - should fail with not matching tracking number', function () {
-    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
+    const ids = [
+      identify('4683271'),
+      identify('AC00000B'),
+      identify('XPU0005283')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('CHRONOPOST')
-      expect(id).to.have.property('candidates').that.not.include('CHRONOPOST')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('CHRONOPOST')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('CHRONOPOST')
     }
   })
 
@@ -76,7 +92,9 @@ describe('Chronopost', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = 'XX0000000000000'
 
-    return expect(couriers.CHRONOPOST.track(number)).to.be.rejectedWith('notFound')
+    return expect(couriers.CHRONOPOST.track(number)).to.be.rejectedWith(
+      'notFound'
+    )
   })
 
   it('track - should fail tracking without tracking number', function () {
@@ -84,7 +102,9 @@ describe('Chronopost', function () {
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(couriers.CHRONOPOST.track('123')).to.be.rejectedWith('notFound')
+    return expect(couriers.CHRONOPOST.track('123')).to.be.rejectedWith(
+      'notFound'
+    )
   })
 })
 
@@ -93,8 +113,12 @@ describe('Colis Prive', function () {
     const ids = [identify('00000000000000000')]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('COLIS_PRIVE')
-      expect(id).to.have.property('rest').that.not.include('COLIS_PRIVE')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('COLIS_PRIVE')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('COLIS_PRIVE')
     }
   })
 
@@ -102,8 +126,12 @@ describe('Colis Prive', function () {
     const ids = [identify('4683271')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('COLIS_PRIVE')
-      expect(id).to.have.property('candidates').that.not.include('COLIS_PRIVE')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('COLIS_PRIVE')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('COLIS_PRIVE')
     }
   })
 
@@ -122,7 +150,9 @@ describe('Colis Prive', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '00000000000000000:12345'
 
-    return expect(couriers.COLIS_PRIVE.track(number)).to.be.rejectedWith('notFound')
+    return expect(couriers.COLIS_PRIVE.track(number)).to.be.rejectedWith(
+      'notFound'
+    )
   })
 
   it('track - should fail tracking without tracking number', function () {
@@ -130,11 +160,15 @@ describe('Colis Prive', function () {
   })
 
   it('track - should fail tracking without zip code', function () {
-    return expect(couriers.COLIS_PRIVE.track('123')).to.be.rejectedWith('zipCode')
+    return expect(couriers.COLIS_PRIVE.track('123')).to.be.rejectedWith(
+      'zipCode'
+    )
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(couriers.COLIS_PRIVE.track('123:12345')).to.be.rejectedWith('notFound')
+    return expect(couriers.COLIS_PRIVE.track('123:12345')).to.be.rejectedWith(
+      'notFound'
+    )
   })
 })
 
@@ -143,8 +177,12 @@ describe('DHL', function () {
     const ids = [identify('0000000000'), identify('XXXX00000000000000000000')]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('DHL')
-      expect(id).to.have.property('rest').that.not.include('DHL')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('DHL')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('DHL')
     }
   })
 
@@ -152,8 +190,12 @@ describe('DHL', function () {
     const ids = [identify('4683271'), identify('AC00000B')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('DHL')
-      expect(id).to.have.property('candidates').that.not.include('DHL')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('DHL')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('DHL')
     }
   })
 
@@ -186,20 +228,36 @@ describe('DHL', function () {
 
 describe('DPD', function () {
   it('identify - should succeed with matching tracking number', function () {
-    const ids = [identify('00000000000000'), identify('000000000000000'), identify('0000000000000000')]
+    const ids = [
+      identify('00000000000000'),
+      identify('000000000000000'),
+      identify('0000000000000000')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('DPD')
-      expect(id).to.have.property('rest').that.not.include('DPD')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('DPD')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('DPD')
     }
   })
 
   it('identify - should fail with not matching tracking number', function () {
-    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
+    const ids = [
+      identify('4683271'),
+      identify('AC00000B'),
+      identify('XPU0005283')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('DPD')
-      expect(id).to.have.property('candidates').that.not.include('DPD')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('DPD')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('DPD')
     }
   })
 
@@ -240,17 +298,30 @@ describe('Fedex', function () {
     ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('FEDEX')
-      expect(id).to.have.property('rest').that.not.include('FEDEX')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('FEDEX')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('FEDEX')
     }
   })
 
   it('identify - should fail with not matching tracking number', function () {
-    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283'), identify('ABCD')]
+    const ids = [
+      identify('4683271'),
+      identify('AC00000B'),
+      identify('XPU0005283'),
+      identify('ABCD')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('FEDEX')
-      expect(id).to.have.property('candidates').that.not.include('FEDEX')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('FEDEX')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('FEDEX')
     }
   })
 
@@ -292,8 +363,12 @@ describe('GLS', function () {
     ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('GLS')
-      expect(id).to.have.property('rest').that.not.include('GLS')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('GLS')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('GLS')
     }
   })
 
@@ -301,8 +376,12 @@ describe('GLS', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('GLS')
-      expect(id).to.have.property('candidates').that.not.include('GLS')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('GLS')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('GLS')
     }
   })
 
@@ -338,17 +417,29 @@ describe('La Poste', function () {
     const ids = [identify('0A012345678A9')]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('LA_POSTE')
-      expect(id).to.have.property('rest').that.not.include('LA_POSTE')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('LA_POSTE')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('LA_POSTE')
     }
   })
 
   it('identify - should fail with not matching tracking number', function () {
-    const ids = [identify('4683271'), identify('AC00000B'), identify('XPU0005283')]
+    const ids = [
+      identify('4683271'),
+      identify('AC00000B'),
+      identify('XPU0005283')
+    ]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('LA_POSTE')
-      expect(id).to.have.property('candidates').that.not.include('LA_POSTE')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('LA_POSTE')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('LA_POSTE')
     }
   })
 
@@ -379,7 +470,9 @@ describe('La Poste', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '0A012345678A9'
 
-    return expect(couriers.LA_POSTE.track(number)).to.be.rejectedWith('notFound')
+    return expect(couriers.LA_POSTE.track(number)).to.be.rejectedWith(
+      'notFound'
+    )
   })
 
   it('track - should fail tracking without tracking number', function () {
@@ -402,8 +495,12 @@ describe('Mondial Relay', function () {
     ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('MONDIAL_RELAY')
-      expect(id).to.have.property('rest').that.not.include('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('MONDIAL_RELAY')
     }
   })
 
@@ -411,8 +508,12 @@ describe('Mondial Relay', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('MONDIAL_RELAY')
-      expect(id).to.have.property('candidates').that.not.include('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('MONDIAL_RELAY')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('MONDIAL_RELAY')
     }
   })
 
@@ -431,7 +532,9 @@ describe('Mondial Relay', function () {
   it('track - should fail tracking unexisting (but valid) tracking number', function () {
     const number = '2583420434:12345'
 
-    return expect(couriers.MONDIAL_RELAY.track(number)).to.be.rejectedWith('notFound')
+    return expect(couriers.MONDIAL_RELAY.track(number)).to.be.rejectedWith(
+      'notFound'
+    )
   })
 
   it('track - should fail tracking without tracking number', function () {
@@ -439,11 +542,15 @@ describe('Mondial Relay', function () {
   })
 
   it('track - should fail tracking without zip code', function () {
-    return expect(couriers.MONDIAL_RELAY.track('46832718')).to.be.rejectedWith('zipCode')
+    return expect(couriers.MONDIAL_RELAY.track('46832718')).to.be.rejectedWith(
+      'zipCode'
+    )
   })
 
   it('track - should fail tracking an invalid tracking number', function () {
-    return expect(couriers.MONDIAL_RELAY.track('4683271:12345')).to.be.rejectedWith('notFound')
+    return expect(
+      couriers.MONDIAL_RELAY.track('4683271:12345')
+    ).to.be.rejectedWith('notFound')
   })
 })
 
@@ -452,8 +559,12 @@ describe('TNT', function () {
     const ids = [identify('012345678'), identify('0123456789012345')]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('TNT')
-      expect(id).to.have.property('rest').that.not.include('TNT')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('TNT')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('TNT')
     }
   })
 
@@ -461,8 +572,12 @@ describe('TNT', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('TNT')
-      expect(id).to.have.property('candidates').that.not.include('TNT')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('TNT')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('TNT')
     }
   })
 
@@ -504,8 +619,12 @@ describe('UPS', function () {
     ]
 
     for (const id of ids) {
-      expect(id).to.have.property('candidates').that.includes('UPS')
-      expect(id).to.have.property('rest').that.not.include('UPS')
+      expect(id)
+        .to.have.property('candidates')
+        .that.includes('UPS')
+      expect(id)
+        .to.have.property('rest')
+        .that.not.include('UPS')
     }
   })
 
@@ -513,8 +632,12 @@ describe('UPS', function () {
     const ids = [identify('4683271'), identify('123'), identify('ABCD3G')]
 
     for (const id of ids) {
-      expect(id).to.have.property('rest').that.include('UPS')
-      expect(id).to.have.property('candidates').that.not.include('UPS')
+      expect(id)
+        .to.have.property('rest')
+        .that.include('UPS')
+      expect(id)
+        .to.have.property('candidates')
+        .that.not.include('UPS')
     }
   })
 
