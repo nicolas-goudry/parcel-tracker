@@ -1,34 +1,36 @@
 [standard:img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [standard:url]: http://standardjs.com
-[mocha]: https://mochajs.org
-[chai]: https://chaijs.com
+[commitizen:img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[commitizen:url]: http://commitizen.github.io/cz-cli/
 [parcel]: https://parceljs.org
 [babel]: https://babeljs.io
 [debug]: https://github.com/visionmedia/debug
-[chaiAsPromised]: https://www.chaijs.com/plugins/chai-as-promised
-[prettier]: https://prettier.io
-[commitizen]: http://commitizen.github.io/cz-cli
+[mocha]: https://mochajs.org
+[chai]: https://chaijs.com
+[chaiaspromised]: https://www.chaijs.com/plugins/chai-as-promised
 [husky]: https://github.com/typicode/husky
+[prettier]: https://prettier.io
 [semver]: http://semver.org
 [tags]: https://github.com/nicolas-goudry/parcel-tracker/releases
 [.mocharc.json]: ./.mocharc.json
 [.prettierrc]: ./.prettierrc
 
-# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url] &middot; [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+# parcel-tracker [![Standard - JavaScript Style Guide][standard:img]][standard:url] &middot; [![Commitizen friendly][commitizen:img]][commitizen:url]
 
 parcel-tracker is a Javascript library which can track parcels from numerous couriers. It can also guess courier from a tracking number.
 
 Supported couriers are :
-* Chronopost
-* Colis Privé
-* DHL
-* DPD
-* Fedex
-* GLS
-* La Poste (Colissimo + Courier Suivi)
-* Mondial Relay
-* TNT
-* UPS
+
+- Chronopost
+- Colis Privé
+- DHL
+- DPD
+- Fedex
+- GLS
+- La Poste (Colissimo + Courier Suivi)
+- Mondial Relay
+- TNT
+- UPS
 
 ## Getting Started
 
@@ -48,7 +50,7 @@ $ npm i -S parcel-tracker --registry http://ec2-35-171-163-20.compute-1.amazonaw
 
 ### Usage
 
-Here is an example on how you *could* implement a sequential auto-tracking feature:
+Here is an example on how you _could_ implement a sequential auto-tracking feature:
 
 ```js
 const { identify, couriers } = require('parcel-tracker')
@@ -112,7 +114,7 @@ Tests are not affected, because this option is already provided to [Mocha config
 
 ## Running the tests
 
-We use [`mocha`][mocha] as test runner and [`chai`][chai] for assertions (with [`chai-as-promised`][chaiAsPromised]).
+We use [`mocha`][mocha] as test runner and [`chai`][chai] for assertions (with [`chai-as-promised`][chaiaspromised]).
 
 To run tests, simply run :
 
@@ -126,11 +128,11 @@ $ npm test
 
 Some hooks are defined with [`husky`][husky] :
 
-* `prepare-commit-msg` : run commitizen => **see below**
-* `pre-commit` : lint codebase
-* `pre-push` : run tests
+- `prepare-commit-msg` : run commitizen => **see below**
+- `pre-commit` : lint codebase
+- `pre-push` : run tests
 
-We use [`commitizen`][commitizen] to ensure proper commit format.
+We use [`commitizen`][commitizen:url] to ensure proper commit format.
 
 **Warning :** if you are using a git GUI (like GitKraken), you won’t be able to commit from those tools due to commitizen interactive commits. **You have to commit from CLI :**
 
@@ -148,7 +150,8 @@ We use [`prettier` code formatter][prettier] with a [custom configuration][.pret
 
 ### Versioning
 
-We use [SemVer][semver] for versioning. For the releases available, see the [releases on this repository][tags]. 
+We use [SemVer][semver] for versioning. For the releases available, see the [releases on this repository][tags].
 
 ---
+
 Copyright © 2020 Nicolas Goudry – All rights reserved
