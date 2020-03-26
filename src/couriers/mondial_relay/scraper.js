@@ -25,7 +25,9 @@ const scrape = function mondialRelayScraper (data, log) {
 
   log('returning parcel data')
 
-  return parsedData('#suivie_mon_colis .infos-account .detail-infos > .step-suivi')
+  return parsedData(
+    '#suivie_mon_colis .infos-account .detail-infos > .step-suivi'
+  )
 }
 
 export default scrape

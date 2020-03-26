@@ -14,7 +14,12 @@ const format = function dpdFormatter (data, log) {
         location: step.scanData.location,
         status: step.scanDescription.content[0],
         // @TODO: Make sure timezone is Paris
-        datetime: +moment.tz(step.date, 'YYYY-MM-DDTHH:mm:ssZ', 'fr', 'Europe/Paris')
+        datetime: +moment.tz(
+          step.date,
+          'YYYY-MM-DDTHH:mm:ssZ',
+          'fr',
+          'Europe/Paris'
+        )
       }
 
       j--
@@ -25,7 +30,9 @@ const format = function dpdFormatter (data, log) {
       const date = $step.children('td[id^=dateTableTrace]').text()
       const time = $step.children('td[id^=heureTableTrace]').text()
       const locationText = $step.children('td[id^=lieuTableTrace]').text()
-      const locationRegexp = locationText.match(/(Agence DPD de|Centre de tri DPD de) (.*) \(.*\)/i)
+      const locationRegexp = locationText.match(
+        /(Agence DPD de|Centre de tri DPD de) (.*) \(.*\)/i
+      )
       const status = $step
         .children('td[id^=statutTableTrace]')
         .text()
@@ -39,7 +46,12 @@ const format = function dpdFormatter (data, log) {
 
       steps.push({
         // @TODO: Make sure timezone is Paris
-        datetime: +moment.tz(`${date} ${time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
+        datetime: +moment.tz(
+          `${date} ${time}`,
+          'DD/MM/YYYY HH:mm',
+          'fr',
+          'Europe/Paris'
+        ),
         location,
         status
       })

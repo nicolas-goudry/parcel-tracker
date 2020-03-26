@@ -32,7 +32,10 @@ const scrape = function dpdScraper (data, log) {
   } else {
     log('searching for parcel data')
 
-    const pkg = get(data, 'parcellifecycleResponse.parcelLifeCycleData.scanInfo')
+    const pkg = get(
+      data,
+      'parcellifecycleResponse.parcelLifeCycleData.scanInfo'
+    )
 
     if (pkg) {
       log('returning parcel data')

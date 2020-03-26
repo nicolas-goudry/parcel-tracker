@@ -25,7 +25,9 @@ const format = function mondialRelayFormatter (data, log) {
       const stepData = Object.keys(stepMatcher).reduce(
         (acc, stepMatch) => {
           if (!acc.location && acc.status.indexOf(stepMatch) !== -1) {
-            const statusMatch = acc.status.match(new RegExp(`^${stepMatch}(.*)$`))
+            const statusMatch = acc.status.match(
+              new RegExp(`^${stepMatch}(.*)$`)
+            )
 
             if (statusMatch) {
               acc = statusMatch.reduce(
@@ -59,7 +61,12 @@ const format = function mondialRelayFormatter (data, log) {
 
       steps.push({
         ...stepData,
-        datetime: +moment.tz(`${day} ${time}`, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris')
+        datetime: +moment.tz(
+          `${day} ${time}`,
+          'DD/MM/YYYY HH:mm',
+          'fr',
+          'Europe/Paris'
+        )
       })
     }
   })

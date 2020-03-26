@@ -28,7 +28,12 @@ const format = function chronopostFormatter (data, log) {
       }
 
       steps.push({
-        datetime: +moment.tz(`${step.Date[0]} ${step.Heure[0]}`, 'dddd DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
+        datetime: +moment.tz(
+          `${step.Date[0]} ${step.Heure[0]}`,
+          'dddd DD/MM/YYYY HH:mm',
+          'fr',
+          'Europe/Paris'
+        ),
         status: step.Libelle[0],
         location
       })

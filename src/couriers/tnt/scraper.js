@@ -26,7 +26,9 @@ const scrape = function tntScraper (data, log) {
     const consignments = pkg && pkg.consignment
 
     if (consignments && consignments.length) {
-      consignments.sort((a, b) => +new Date(b.originDate) - +new Date(a.originDate))
+      consignments.sort(
+        (a, b) => +new Date(b.originDate) - +new Date(a.originDate)
+      )
 
       if (consignments[0].events && consignments[0].events.length) {
         log('returning parcel data')

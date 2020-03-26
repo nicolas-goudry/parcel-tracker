@@ -9,7 +9,12 @@ const format = function fedexFormatter (data, log) {
     steps.push({
       status: step.status,
       location: step.scanLocation || null,
-      datetime: +moment.tz(`${step.date} ${step.time}`, 'YYYY-MM-DD HH:mm:ss', 'fr', 'Europe/Paris')
+      datetime: +moment.tz(
+        `${step.date} ${step.time}`,
+        'YYYY-MM-DD HH:mm:ss',
+        'fr',
+        'Europe/Paris'
+      )
     })
   }
 

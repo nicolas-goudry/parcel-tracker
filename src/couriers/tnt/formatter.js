@@ -34,7 +34,12 @@ const format = function tntFormatter (data, log) {
         .trim()
 
       steps.push({
-        datetime: +moment.tz(dateTime, 'DD/MM/YYYY HH:mm', 'fr', 'Europe/Paris'),
+        datetime: +moment.tz(
+          dateTime,
+          'DD/MM/YYYY HH:mm',
+          'fr',
+          'Europe/Paris'
+        ),
         location: location || null,
         status
       })

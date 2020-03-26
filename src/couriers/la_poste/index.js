@@ -14,7 +14,9 @@ const makeOpts = async (number) => {
     method: 'get',
     url: 'https://www.laposte.fr/outils/suivre-vos-envois'
   })
-  const [accessToken] = butterRequest.headers['set-cookie'].map((val) => val.split(';')[0])
+  const [accessToken] = butterRequest.headers['set-cookie'].map(
+    (val) => val.split(';')[0]
+  )
 
   if (accessToken) {
     return {
@@ -59,8 +61,14 @@ class LaPoste extends Courier {
       throw errors.internal.call(this, err)
     })
 
-    if (response.data && response.data.shipment && response.data.shipment.product === 'chronopost') {
-      this.log('parcel is owned by chronopost, performing a new tracking with this courier')
+    if (
+      response.data &&
+      response.data.shipment &&
+      response.data.shipment.product === 'chronopost'
+    ) {
+      this.log(
+        'parcel is owned by chronopost, performing a new tracking with this courier'
+      )
 
       return chronopost.track(number)
     }

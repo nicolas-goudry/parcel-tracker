@@ -10,7 +10,12 @@ const format = function colisPriveFormatter (data, log) {
     const $step = cheerio(step)
 
     steps.push({
-      datetime: +moment.tz($step.children('td:first-child').text(), 'DD/MM/YYYY', 'fr', 'Europe/Paris'),
+      datetime: +moment.tz(
+        $step.children('td:first-child').text(),
+        'DD/MM/YYYY',
+        'fr',
+        'Europe/Paris'
+      ),
       location: null,
       status: $step.children('td:last-child').text()
     })

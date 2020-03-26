@@ -10,7 +10,10 @@ for (const courierKey of Object.keys(couriers)) {
   couriersNumberMatchers[courier.id] = courier.matchers
 }
 
-const identify = (number, log = createDebugger('parcel-tracker:identifier')) => {
+const identify = (
+  number,
+  log = createDebugger('parcel-tracker:identifier')
+) => {
   log(`try to identify ${number}`)
 
   const candidates = new Set()
@@ -19,7 +22,9 @@ const identify = (number, log = createDebugger('parcel-tracker:identifier')) => 
   for (const courierNumberMatcherKey of Object.keys(couriersNumberMatchers)) {
     log(`testing ${courierNumberMatcherKey}...`)
 
-    for (const courierNumberMatcher of couriersNumberMatchers[courierNumberMatcherKey]) {
+    for (const courierNumberMatcher of couriersNumberMatchers[
+      courierNumberMatcherKey
+    ]) {
       if (courierNumberMatcher.test(number)) {
         log(`${courierNumberMatcher} => MATCH`)
 
@@ -30,11 +35,15 @@ const identify = (number, log = createDebugger('parcel-tracker:identifier')) => 
     }
 
     if (!candidates.has(courierNumberMatcherKey)) {
-      log(`${courierNumberMatcherKey} doesn’t match ${number} pattern, adding to rest`)
+      log(
+        `${courierNumberMatcherKey} doesn’t match ${number} pattern, adding to rest`
+      )
 
       rest.add(courierNumberMatcherKey)
     } else {
-      log(`${courierNumberMatcherKey} matches ${number} pattern, adding to candidates`)
+      log(
+        `${courierNumberMatcherKey} matches ${number} pattern, adding to candidates`
+      )
     }
   }
 

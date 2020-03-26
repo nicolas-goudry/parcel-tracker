@@ -37,7 +37,11 @@ const format = function dhlFormatter (data, log) {
               (_acc, match, i) => {
                 if (i === 0) {
                   _acc.status = stepMatcher[stepMatch]
-                } else if (!acc.location && i === 1 && typeof match === 'string') {
+                } else if (
+                  !acc.location &&
+                  i === 1 &&
+                  typeof match === 'string'
+                ) {
                   _acc.location = match.replace(/[.]/g, '').trim()
                 }
 
@@ -61,7 +65,12 @@ const format = function dhlFormatter (data, log) {
 
     steps.push({
       // @TODO: Make sure timezone is Paris
-      datetime: +moment.tz(`${step.date.trim()} ${step.time.trim()}`, dateParse, 'fr', 'Europe/Paris'),
+      datetime: +moment.tz(
+        `${step.date.trim()} ${step.time.trim()}`,
+        dateParse,
+        'fr',
+        'Europe/Paris'
+      ),
       ...stepData
     })
   }

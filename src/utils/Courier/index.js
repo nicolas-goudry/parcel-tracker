@@ -36,7 +36,10 @@ export default class Courier {
    * @throws {ValidationError} Joi validation error
    * @see https://hapi.dev/family/joi/api/?v=16.1.8#validationerror
    */
-  track (number, log = createDebugger(`parcel-tracker:${this.id.toLowerCase()}`)) {
+  track (
+    number,
+    log = createDebugger(`parcel-tracker:${this.id.toLowerCase()}`)
+  ) {
     this.log = log
 
     this.log('validate tracking number')
