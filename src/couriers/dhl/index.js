@@ -62,7 +62,10 @@ class DHL extends Courier {
       this.log('failed to retrieve tracking data')
       this.log(error)
 
-      if (error.response && error.response.status === 400) {
+      if (
+        error.response &&
+        (error.response.status === 400 || error.response.status === 503)
+      ) {
         throw errors.notFound
       }
 
